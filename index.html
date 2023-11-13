@@ -191,7 +191,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/11/14/sqlmap1/" class="post-title-link" itemprop="url">sqlmap1</a>
+            <a href="/2023/11/14/sqlmap1/" class="post-title-link" itemprop="url">SQLMAP常用指令</a>
         </h2>
 
         <div class="post-meta">
@@ -202,7 +202,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-11-14 00:37:15 / 修改时间：00:45:08" itemprop="dateCreated datePublished" datetime="2023-11-14T00:37:15+08:00">2023-11-14</time>
+              <time title="创建时间：2023-11-14 00:37:15 / 修改时间：00:58:08" itemprop="dateCreated datePublished" datetime="2023-11-14T00:37:15+08:00">2023-11-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -225,7 +225,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>好困，人要昏死忒了</p>
+          <p>好困，人要昏死忒了<br>-h		帮助<br>–version		版本号<br>-d		连接数据库”mysql:&#x2F;&#x2F;root:<a href="mailto:&#114;&#x6f;&#x6f;&#x74;&#64;&#x31;&#x39;&#x32;&#46;&#49;&#54;&#56;&#x2e;&#x33;&#x2e;&#50;&#x30;">&#114;&#x6f;&#x6f;&#x74;&#64;&#x31;&#x39;&#x32;&#46;&#49;&#54;&#56;&#x2e;&#x33;&#x2e;&#50;&#x30;</a>:3306&#x2F;db”   “数据库种类:&#x2F;&#x2F;账号:密码@地址:端口&#x2F;库<br>–current-db	当前数据库<br>–dbs		列出所有数据库 等于show database()<br>–tables		列出某库的所有表<br>–columns	列出某表的所有列<br>-D		选择哪个数据库<br>-T		选择哪个表<br>-C		选择哪个列<br>–dump	 	获取字段里的数据<br>–dump-al	脱库<br>–batch		选项全选yes<br>–smart		启发式快速判断<br>–forms		post请求注入 ,http包头包体每个字段尝试注入, –level最好是2<br>-r		从文件中载入http请求,指定数据包 先抓一个包然后保存下来使用-r</p>
+<p>-g		从谷歌里按照谷歌语法搜索前100条有get请求的url去测试<br>-o		开启性能优化,优化的分别为–keep-alive，–null-connection，–thread<br>–tamper		使用脚本，多脚本用逗号隔开 通常绕过waf<br>-v		回显等级0~6<br>–delay		访问间隔，绕过waf<br>–os-shell		获取webshell<br>-m		读取文件中的url批量操作<br>–data		post请求的包体可以直接写后面<br>–timeout		设置超时时间<br>-level		注入探索等级,一般用4<br>–is-dba		是否是dba权限<br>–risk		风险等级（0-3，默认为1）<br>–identify-waf	检测防火墙类型<br>–param-del	设置参数分隔符<br>–skip-urlencode	跳过url编码<br>–keep-alive	这是持久连接，加快探测速度<br>–null-connection	检索没有body响应内容，多用于盲注<br>–thread		设置线程数，最大10<br>–technique  	选择注入类型 B 布尔注入，E报错注入，U联合注入 T时间盲注 S 使用sqlmap的配置,如果是布尔盲注应选择U而并非B<br>–cookie “t&#x3D;1”	cookie注入<br>–safe-url		每隔一段时间去访问安全页面<br>–proxy		代理<br>–file-read	读取服务器里的哪个文件，等同于手工注入的load_file()<br>–file-write	选取本地的哪个文件<br>–file-dest	写入服务器里的哪个文件 ,等同于手工注入的into out_file()和–file-write 一起使用<br>–dbms		设置数据库类型<br>————————————————<br>转载至:<a target="_blank" rel="noopener" href="https://blog.csdn.net/Jerry_GuJY/article/details/124061860">https://blog.csdn.net/Jerry_GuJY/article/details/124061860</a></p>
 
       
     </div>
