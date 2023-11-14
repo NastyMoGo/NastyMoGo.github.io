@@ -20,18 +20,32 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="要混希特勒">
+  <meta name="description" content="实验环境:kali2023(一台)，OWASP Broken Web Apps(一台)，nat连接,处于同一网段">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SQLMAP实操">
 <meta property="og:url" content="http://example.com/2023/11/14/sqlmap%E5%AE%9E%E6%93%8D/index.html">
 <meta property="og:site_name" content="沫篝的幻想世界">
-<meta property="og:description" content="要混希特勒">
+<meta property="og:description" content="实验环境:kali2023(一台)，OWASP Broken Web Apps(一台)，nat连接,处于同一网段">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/1.PNG">
+<meta property="og:image" content="http://example.com/images/2.PNG">
+<meta property="og:image" content="http://example.com/images/3.PNG">
+<meta property="og:image" content="http://example.com/images/4.PNG">
+<meta property="og:image" content="http://example.com/images/5.PNG">
+<meta property="og:image" content="http://example.com/images/6.PNG">
+<meta property="og:image" content="http://example.com/images/7.PNG">
+<meta property="og:image" content="http://example.com/images/8.PNG">
+<meta property="og:image" content="http://example.com/images/9.PNG">
+<meta property="og:image" content="http://example.com/images/10.PNG">
+<meta property="og:image" content="http://example.com/images/11.PNG">
+<meta property="og:image" content="http://example.com/images/12.PNG">
+<meta property="og:image" content="http://example.com/images/13.PNG">
 <meta property="article:published_time" content="2023-11-13T17:06:14.000Z">
-<meta property="article:modified_time" content="2023-11-14T10:26:29.125Z">
+<meta property="article:modified_time" content="2023-11-14T15:41:57.149Z">
 <meta property="article:author" content="MoGo">
 <meta property="article:tag" content="网络信息安全">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/1.PNG">
 
 <link rel="canonical" href="http://example.com/2023/11/14/sqlmap%E5%AE%9E%E6%93%8D/">
 
@@ -205,7 +219,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-11-14 01:06:14 / 修改时间：18:26:29" itemprop="dateCreated datePublished" datetime="2023-11-14T01:06:14+08:00">2023-11-14</time>
+              <time title="创建时间：2023-11-14 01:06:14 / 修改时间：23:41:57" itemprop="dateCreated datePublished" datetime="2023-11-14T01:06:14+08:00">2023-11-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -228,7 +242,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>要混希特勒</p>
+        <p>实验环境:kali2023(一台)，OWASP Broken Web Apps(一台)，nat连接,处于同一网段<br><img src="/images/1.PNG"><br><img src="/images/2.PNG"> </p>
+<span id="more"></span>
+<p>访问靶机网页地址，登入DVWA，进行低难度的sql注入（用户名密码：admin,admin）<br><img src="/images/3.PNG"><br>尝试随机提交一个数1，看其回显，<a target="_blank" rel="noopener" href="http://192.168.68.133/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit#%EF%BC%8C%E7%94%B1%E6%AD%A4%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%B0%9D%E8%AF%95%E9%80%9A%E8%BF%87id%E8%BF%9B%E8%A1%8Csql%E6%B3%A8%E5%85%A5">http://192.168.68.133/dvwa/vulnerabilities/sqli/?id=1&amp;Submit=Submit#，由此我们可以尝试通过id进行sql注入</a><br><img src="/images/4.PNG"><br>利用sqlmap进行注入，发现其需要登入，这里使用cookie进行登入<br><img src="/images/5.PNG"><br><img src="/images/6.PNG"><br><img src="/images/7.PNG"><br>查看有哪些数据库–dbs<br><img src="/images/8.PNG"><br>查看现用数据库–current-db<br><img src="/images/9.PNG"><br>查看当前数据库表格-D 数据库名称 –tables<br><img src="/images/10.PNG"><br>查看当前数据库表格字段-D 数据库名称 -T –columns<br><img src="/images/11.PNG"><br>爆破管理员账户，密码-D 数据库名称 -T -C 要爆破的字段 –dump<br><img src="/images/12.PNG"><br><img src="/images/13.PNG"><br>暂时实操就先这样了</p>
 
     </div>
 
