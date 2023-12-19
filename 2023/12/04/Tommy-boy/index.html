@@ -55,8 +55,15 @@
 <meta property="og:image" content="http://example.com/Tommy/27.PNG">
 <meta property="og:image" content="http://example.com/Tommy/28.PNG">
 <meta property="og:image" content="http://example.com/Tommy/29.PNG">
+<meta property="og:image" content="http://example.com/Tommy/30.PNG">
+<meta property="og:image" content="http://example.com/Tommy/31.PNG">
+<meta property="og:image" content="http://example.com/Tommy/32.PNG">
+<meta property="og:image" content="http://example.com/Tommy/33.PNG">
+<meta property="og:image" content="http://example.com/Tommy/34.PNG">
+<meta property="og:image" content="http://example.com/Tommy/35.PNG">
+<meta property="og:image" content="http://example.com/Tommy/36.PNG">
 <meta property="article:published_time" content="2023-12-04T11:38:40.000Z">
-<meta property="article:modified_time" content="2023-12-10T11:25:41.370Z">
+<meta property="article:modified_time" content="2023-12-11T08:17:25.539Z">
 <meta property="article:author" content="MoGo">
 <meta property="article:tag" content="网络信息安全">
 <meta name="twitter:card" content="summary">
@@ -245,7 +252,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-10 19:25:41" itemprop="dateModified" datetime="2023-12-10T19:25:41+08:00">2023-12-10</time>
+                <time title="修改时间：2023-12-11 16:17:25" itemprop="dateModified" datetime="2023-12-11T16:17:25+08:00">2023-12-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -270,7 +277,10 @@
       
         <p>今天正好有点时间，先整个靶机<br>kali一台	Tommy靶机一台<br><img src="/Tommy/1.PNG"> </p>
 <span id="more"></span>
-<p>老样子两件套，发现防止爬虫的目录<br><img src="/Tommy/2.PNG"><br>依次进入访问<br><img src="/Tommy/3.PNG"><br><img src="/Tommy/4.PNG"><br>成功取得flag1，他这里说有五个flag（F12查看，并未发现有其他线索）<br>重新回到192.168.68.137，他这里说什么订阅系统已关闭，恢复备份之类的，还是跟之前一样，找不到线索就F12，里面写了一堆乱七八糟的东西，但是可以看到有一个油管网址<br><img src="/Tommy/6.PNG"><br><img src="/Tommy/7.PNG"><br>访问一下，<br><img src="/Tommy/8.PNG"><br>发现了两个英文词组PREHISTORIC FOREST,LIFE SHOP，看看是不是有这类文件夹，手工太麻烦了，这里使用dirb直接爆破<br><img src="/Tommy/9.PNG"><br>不知道啥原因，数据库连接不上，重新安装了一下靶机，来到了一个不知道什么的网页，有很多评论，我们可以查看一下先<br><img src="/Tommy/10.PNG"><br><img src="/Tommy/11.PNG"><br>找了半天可算是找到点线索了，给了我个txt文件，尝试打开看看<br><img src="/Tommy/12.PNG"><br>感觉这次的靶机渗透挺恶心的，还得一个个目录去试<br>继续看看还有有没有什么其他的线索，发现一个要密码的信息<br><img src="/Tommy/13.PNG"><br>英语水平不是很好，利用谷歌翻译进行解读，大致是说此内容受密码保护。要查看它，请在下面输入您的密码：，看看其他的信息，发现有个信息是问密码的，其下的评论说“嘿，麻木的人，看看这个服务器上的 &#x2F;richard 文件夹。我相信这张照片会勾起你的记忆”，一看到照片啊，直接就想到图片隐写，直接去查看<br><img src="/Tommy/14.PNG"><br><img src="/Tommy/15.PNG"><br>ce什么的这段是潜藏的md5码，解码后得到spanky，将密码输入<br><img src="/Tommy/16.PNG"><br>信封里说服务器15分钟停机一次，给了账号nickburns密码很简单 用特别的端口连接，在-p-的时候看到端口是65532可能是ftp端口，进行尝试，发现readme.txt里面说有个叫NickIzL33t的文件夹，进行访问<br><img src="/Tommy/17.PNG"><br><img src="/Tommy/18.PNG"><br>他这里说只有乔布斯才能看到，我们换成苹果身份进入<br><img src="/Tommy/19.PNG"><br>安装插件CSa快捷键，安装完后就可以访问了<br><img src="/Tommy/20.PNG"><br>他说让我去找一个目录，我们直接dirb爆破（失败了），利用dirbuster爆破<br><img src="/Tommy/21.PNG"><br>http options里的请求方式为iphone，访问尾改为html,下面引用一张猫涅的示意图(<a target="_blank" rel="noopener" href="https://www.maonie.top/">https://www.maonie.top</a>)<br><img src="/Tommy/22.PNG"><br>进行暴力枚举，省略一下过程，虚机爆烂了得到结果fallon1.html<br><img src="/Tommy/23.PNG"><br>hint目录中给了一点密码的信息，13个字符串，老婆的名称bev,一个大写字母两个数字，两个小写字母，一个特殊符号，汤姆男孩上映的那年<br><img src="/Tommy/24.PNG"><br>得到flag3或5<br><img src="/Tommy/25.PNG"><br>还有一个压缩包，需要密码，我们尝试用刚刚信里说的信息进行crunch生成<br>crunch <min-len>  <max-len>  [<charset string>] [options]<br>参数：<br>min-len 最小长度字符串，即使不使用参数的值，也需要此选项<br>max-len 最大长度字符串，即使不使用参数的值，也需要此选项<br>charset string 字符集设置，默认是小写字符集<br>-b     指定文件输出的大小，避免字典文件过大<br>-c     指定文件输出的行数，即包含密码的个数<br>-d     限制相同元素出现的次数<br>-e     定义停止字符，即到该字符串就停止生成<br>-f     调用库文件（&#x2F;etc&#x2F;share&#x2F;crunch&#x2F;charset.lst）<br>-i     改变输出格式，即aaa,aab -&gt; aaa,baa<br>-I     通常与-t联合使用，表明该字符为实义字符<br>-m     通常与-p搭配<br>-o     将密码保存到指定文件<br>-p     指定元素以组合的方式进行<br>-q     读取密码文件，即读取pass.txt<br>-r     定义重某一字符串重新开始<br>-s     指定一个开始的字符，即从自己定义的密码xxxx开始<br>-t     指定密码输出的格式<br>-u     禁止打印百分比（必须为最后一个选项）<br>-z     压缩生成的字典文件，支持gzip,bzip2,lzma,7z<br>特殊字符，通常与-t配合使用<br>%      代表数字<br>^      代表特殊符号<br>@      代表小写字符<br>,      代表大写字符<br>链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38319566/article/details/107737119">https://blog.csdn.net/qq_38319566/article/details/107737119</a><br><img src="/Tommy/26.PNG"><br>利用fcrackzip进行爆破<br><img src="/Tommy/27.PNG"><br>unzip解压，得到四个密码，其中两个密码是不完整的<br>（今天不想干了，剩下的改日再说）<br><img src="/Tommy/28.PNG"><br><img src="/Tommy/29.PNG"> </p>
+<p>老样子两件套，发现防止爬虫的目录<br><img src="/Tommy/2.PNG"><br>依次进入访问<br><img src="/Tommy/3.PNG"><br><img src="/Tommy/4.PNG"><br>成功取得flag1，他这里说有五个flag（F12查看，并未发现有其他线索）<br>重新回到192.168.68.137，他这里说什么订阅系统已关闭，恢复备份之类的，还是跟之前一样，找不到线索就F12，里面写了一堆乱七八糟的东西，但是可以看到有一个油管网址<br><img src="/Tommy/6.PNG"><br><img src="/Tommy/7.PNG"><br>访问一下，<br><img src="/Tommy/8.PNG"><br>发现了两个英文词组PREHISTORIC FOREST,LIFE SHOP，看看是不是有这类文件夹，手工太麻烦了，这里使用dirb直接爆破<br><img src="/Tommy/9.PNG"><br>不知道啥原因，数据库连接不上，重新安装了一下靶机，来到了一个不知道什么的网页，有很多评论，我们可以查看一下先<br><img src="/Tommy/10.PNG"><br><img src="/Tommy/11.PNG"><br>找了半天可算是找到点线索了，给了我个txt文件，尝试打开看看<br><img src="/Tommy/12.PNG"><br>感觉这次的靶机渗透挺恶心的，还得一个个目录去试<br>继续看看还有有没有什么其他的线索，发现一个要密码的信息<br><img src="/Tommy/13.PNG"><br>英语水平不是很好，利用谷歌翻译进行解读，大致是说此内容受密码保护。要查看它，请在下面输入您的密码：，看看其他的信息，发现有个信息是问密码的，其下的评论说“嘿，麻木的人，看看这个服务器上的 &#x2F;richard 文件夹。我相信这张照片会勾起你的记忆”，一看到照片啊，直接就想到图片隐写，直接去查看<br><img src="/Tommy/14.PNG"><br><img src="/Tommy/15.PNG"><br>ce什么的这段是潜藏的md5码，解码后得到spanky，将密码输入<br><img src="/Tommy/16.PNG"><br>信封里说服务器15分钟停机一次，给了账号nickburns密码很简单 用特别的端口连接，在-p-的时候看到端口是65532可能是ftp端口，进行尝试，发现readme.txt里面说有个叫NickIzL33t的文件夹，进行访问<br><img src="/Tommy/17.PNG"><br><img src="/Tommy/18.PNG"><br>他这里说只有乔布斯才能看到，我们换成苹果身份进入<br><img src="/Tommy/19.PNG"><br>安装插件CSa快捷键，安装完后就可以访问了<br><img src="/Tommy/20.PNG"><br>他说让我去找一个目录，我们直接dirb爆破（失败了），利用dirbuster爆破<br><img src="/Tommy/21.PNG"><br>http options里的请求方式为iphone，访问尾改为html,下面引用一张猫涅的示意图(<a target="_blank" rel="noopener" href="https://www.maonie.top/">https://www.maonie.top</a>)<br><img src="/Tommy/22.PNG"><br>进行暴力枚举，省略一下过程，虚机爆烂了得到结果fallon1.html<br><img src="/Tommy/23.PNG"><br>hint目录中给了一点密码的信息，13个字符串，老婆的名称bev,一个大写字母两个数字，两个小写字母，一个特殊符号，汤姆男孩上映的那年<br><img src="/Tommy/24.PNG"><br>得到flag3或5<br><img src="/Tommy/25.PNG"><br>还有一个压缩包，需要密码，我们尝试用刚刚信里说的信息进行crunch生成<br>crunch <min-len>  <max-len>  [<charset string>] [options]<br>参数：<br>min-len 最小长度字符串，即使不使用参数的值，也需要此选项<br>max-len 最大长度字符串，即使不使用参数的值，也需要此选项<br>charset string 字符集设置，默认是小写字符集<br>-b     指定文件输出的大小，避免字典文件过大<br>-c     指定文件输出的行数，即包含密码的个数<br>-d     限制相同元素出现的次数<br>-e     定义停止字符，即到该字符串就停止生成<br>-f     调用库文件（&#x2F;etc&#x2F;share&#x2F;crunch&#x2F;charset.lst）<br>-i     改变输出格式，即aaa,aab -&gt; aaa,baa<br>-I     通常与-t联合使用，表明该字符为实义字符<br>-m     通常与-p搭配<br>-o     将密码保存到指定文件<br>-p     指定元素以组合的方式进行<br>-q     读取密码文件，即读取pass.txt<br>-r     定义重某一字符串重新开始<br>-s     指定一个开始的字符，即从自己定义的密码xxxx开始<br>-t     指定密码输出的格式<br>-u     禁止打印百分比（必须为最后一个选项）<br>-z     压缩生成的字典文件，支持gzip,bzip2,lzma,7z<br>特殊字符，通常与-t配合使用<br>%      代表数字<br>^      代表特殊符号<br>@      代表小写字符<br>,      代表大写字符<br>链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38319566/article/details/107737119">https://blog.csdn.net/qq_38319566/article/details/107737119</a><br><img src="/Tommy/26.PNG"><br>利用fcrackzip进行爆破<br><img src="/Tommy/27.PNG"><br>unzip解压，得到四个密码，其中两个密码是不完整的<br>（今天不想干了，剩下的改日再说）<br><img src="/Tommy/28.PNG"><br>bigtommysenior密码提示：fatguyinalittlecoat后面加了数字 在公司博客中，bigtom(账号不确定的密码提示：与皇后乐队的有名歌曲有关联，已知公司博客的类型是wordpress这里用到wpscan工具来进行漏洞扫描<br>引用一段相关知识（from maonie）</p>
+<blockquote>
+<p>–update  更新到最新版本<br>–url   | -u <target url>  要扫描的<code>WordPress</code>站点.<br>–force | -f   不检查网站运行的是不是<code>WordPress</code><br>–enumerate | -e [option(s)]  枚举<br>u 枚举用户名，默认从1-10<br>u[10-20] 枚举用户名，配置从10-20<br>–username | -U &lt;username指定爆破的用户名<br>–wordlist | -w &lt;wordlist指定密码字典<br>利用WPScan对服务器进行站点枚举用户名<br>wpscan+–url “” -# -# ….<br><img src="/Tommy/29.PNG"><br>这里可以看到发现了用户名tom，进行密码爆破，爆破出密码tomtom1<br>wpscan –url “<a target="_blank" rel="noopener" href="http://192.168.68.138/prehistoricforest/">http://192.168.68.138/prehistoricforest/</a>“ -P &#x2F;root&#x2F;rockyou.txt -U tom<br><img src="/Tommy/30.PNG"><br>进入d<br><img src="/Tommy/31.PNG"><br><img src="/Tommy/32.PNG"><br><img src="/Tommy/33.PNG"><br><img src="/Tommy/34.PNG"><br><img src="/Tommy/35.PNG"><br><img src="/Tommy/36.PNG"> </p>
+</blockquote>
 
     </div>
 
@@ -369,7 +379,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
