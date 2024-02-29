@@ -1,14 +1,15 @@
-var OriginTitle = document.title;
+<!--浏览器搞笑标题-->
+ var OriginTitle = document.title;
  var titleTime;
  document.addEventListener('visibilitychange', function () {
      if (document.hidden) {
-         $('[rel="icon"]').attr('href', "/img/favicon-16x16.png");
-         document.title = '这么没实力吗，小老弟';
+         $('[rel="icon"]').attr('href', "/img/trhx2.png");
+         document.title = 'ヽ(●-`Д´-)ノ你丑你就走！';
          clearTimeout(titleTime);
      }
      else {
-         $('[rel="icon"]').attr('href', "/img/favicon-16x16.png");
-         document.title = '包有实力的' + OriginTitle;
+         $('[rel="icon"]').attr('href', "/img/trhx2.png");
+         document.title = 'ヾ(Ő∀Ő3)ノ你帅就回来！' + OriginTitle;
          titleTime = setTimeout(function () {
              document.title = OriginTitle;
          }, 2000);
