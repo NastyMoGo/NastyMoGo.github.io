@@ -1,23 +1,40 @@
- 
+---
+layout: false 
+--- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Website</title>
+    <title>澳谷赌场</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-image: url('video1.jpg'); /* 添加背景图片 */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             background-color: #f0f0f0;
+            margin-bottom: calc(100vh / 8); /* 计算占屏幕高度的1/8的高度 */
         }
 
         header {
-            background-color: #333;
+            background: linear-gradient(to right, #4CAF50, #2196F3);
             color: white;
             padding: 10px;
             text-align: center;
+            animation: gradientAnimation 5s infinite linear;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
         }
 
         main {
@@ -30,8 +47,8 @@
 
         .video-container {
             position: relative;
-            padding-bottom: 100%; /* 16:9 aspect ratio */
-            width: 80%;
+            padding-bottom: 100%;
+            width: 100%;
             height: 0;
             overflow: hidden;
         }
@@ -43,29 +60,200 @@
             width: 100%;
             height: 100%;
         }
+
+        .video-directory {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+
+        .video-directory h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .video-directory ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .video-directory li {
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .video-thumbnail {
+            float: left;
+            margin-right: 20px;
+        }
+
+        .video-thumbnail img {
+            width: 120px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .video-details {
+            overflow: hidden;
+        }
+
+        .video-details h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .video-directory a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .video-directory a:hover {
+            color: #0056b3;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* 新添加的广告样式 */
+        .advertisement {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            height: calc(100vh / 8); /* 计算占屏幕高度的1/8的高度 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.5s ease; /* 添加过渡效果 */
+        }
+
+        .advertisement a {
+            text-decoration: none;
+        }
+
+        .advertisement img {
+            width: 100%;
+            height: 100%; /* 设置图片的高度为100% */
+            object-fit: fill; /* 拉伸图片以填充整个容器 */
+        }
+        /* 广告样式结束 */
+
     </style>
 </head>
 <body>
 
     <header>
-        <h1>My Video Website</h1>
+        <h1>First-rate LOL video</h1>
     </header>
 
     <main>
-        <h2>Featured Video</h2>
+        <h2>每周精品NO.1</h2>
         <div class="video-container">
             <!-- Replace the video URL with your actual video URL -->
             <iframe src="1.webm" frameborder="0" allowfullscreen></iframe>
         </div>
 
-        <h2>Latest Videos</h2>
-        <ul>
-            <!-- Add more video items as needed -->
-            <li><a href="1.webm">Video 1</a></li>
-            <li><a href="1.webm">Video 2</a></li>
-            <li><a href="1.webm">Video 3</a></li>
-        </ul>
+        <div class="video-directory">
+            <h2>Video Directory</h2>
+            <ul>
+                <!-- Add more video items as needed -->
+                <li>
+                    <div class="video-thumbnail">
+                        <img src="video1.jpg" alt="Video 1 Thumbnail">
+                    </div>
+                    <div class="video-details">
+                        <h3>Zrun Robot</h3>
+                        <p>上传时间:2024/3/2</p>
+                        <a href="1.webm">点击观看</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="video-thumbnail">
+                        <img src="video1.jpg" alt="Video 1 Thumbnail">
+                    </div>
+                    <div class="video-details">
+                        <h3>Zrun Robot</h3>
+                        <p>上传时间:2024/3/2</p>
+                        <a href="1.webm">点击观看</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="video-thumbnail">
+                        <img src="video1.jpg" alt="Video 1 Thumbnail">
+                    </div>
+                    <div class="video-details">
+                        <h3>Zrun Robot</h3>
+                        <p>上传时间:2024/3/2</p>
+                        <a href="1.webm">点击观看</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="video-thumbnail">
+                        <img src="video1.jpg" alt="Video 1 Thumbnail">
+                    </div>
+                    <div class="video-details">
+                        <h3>Zrun Robot</h3>
+                        <p>上传时间:2024/3/2</p>
+                        <a href="1.webm">点击观看</a>
+                    </div>
+                </li>
+                <!-- ... (其他视频项) ... -->
+            </ul>
+            <a href="#" class="btn">View All Videos</a>
+        </div>
     </main>
+
+    <!-- 广告容器 -->
+    <div class="advertisement" id="advertisement">
+        <a href="https://www.maonie.top/" target="_blank">
+            <img src="ceshi.png" alt="Advertisement">
+        </a>
+    </div>
+
+    <script>
+        // 使用JavaScript监听滚动事件，根据滚动方向显示/隐藏广告
+        let lastScrollTop = 0;
+
+        window.addEventListener("scroll", function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            let transformValue = "";
+
+            if (scrollTop > lastScrollTop) {
+                // 向下滚动
+                transformValue = "translateY(100%)";
+            } else {
+                // 向上滚动
+                transformValue = "translateY(0)";
+            }
+
+            document.getElementById("advertisement").style.transform = transformValue;
+
+            lastScrollTop = scrollTop;
+        });
+    </script>
 
 </body>
 </html>
