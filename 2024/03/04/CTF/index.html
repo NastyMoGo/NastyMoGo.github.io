@@ -46,8 +46,26 @@
 <meta property="og:image" content="http://example.com/CTF/17.PNG">
 <meta property="og:image" content="http://example.com/CTF/18.PNG">
 <meta property="og:image" content="http://example.com/CTF/19.PNG">
+<meta property="og:image" content="http://example.com/CTF/20.PNG">
+<meta property="og:image" content="http://example.com/CTF/21.PNG">
+<meta property="og:image" content="http://example.com/CTF/22.PNG">
+<meta property="og:image" content="http://example.com/CTF/23.PNG">
+<meta property="og:image" content="http://example.com/CTF/24.PNG">
+<meta property="og:image" content="http://example.com/CTF/25.PNG">
+<meta property="og:image" content="http://example.com/CTF/26.PNG">
+<meta property="og:image" content="http://example.com/CTF/27.PNG">
+<meta property="og:image" content="http://example.com/CTF/28.PNG">
+<meta property="og:image" content="http://example.com/CTF/29.PNG">
+<meta property="og:image" content="http://example.com/CTF/30.PNG">
+<meta property="og:image" content="http://example.com/CTF/31.PNG">
+<meta property="og:image" content="http://example.com/CTF/32.PNG">
+<meta property="og:image" content="http://example.com/CTF/34.PNG">
+<meta property="og:image" content="http://example.com/CTF/35.PNG">
+<meta property="og:image" content="http://example.com/CTF/36.PNG">
+<meta property="og:image" content="http://example.com/CTF/37.PNG">
+<meta property="og:image" content="http://example.com/CTF/38.PNG">
 <meta property="article:published_time" content="2024-03-04T14:44:01.000Z">
-<meta property="article:modified_time" content="2024-03-06T11:07:22.762Z">
+<meta property="article:modified_time" content="2024-03-11T14:13:42.772Z">
 <meta property="article:author" content="MoGo">
 <meta property="article:tag" content="网络信息安全">
 <meta name="twitter:card" content="summary">
@@ -236,7 +254,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-06 19:07:22" itemprop="dateModified" datetime="2024-03-06T19:07:22+08:00">2024-03-06</time>
+                <time title="修改时间：2024-03-11 22:13:42" itemprop="dateModified" datetime="2024-03-11T22:13:42+08:00">2024-03-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,7 +285,18 @@
 <span id="more"></span>
 <p><img src="/CTF/1.PNG"><br>这里可以看到网址上是没有当前文件名，这里是index.php（一般都是这个）<br>这里是GET传参，当$what&#x3D;flag时输出flag<br><img src="/CTF/2.PNG"><br>flag{5ed5035b41c455c9cebee29d8243efb0}<br>ok,进入下一题<br><img src="/CTF/3.PNG"><br>这里可以看出我们需要以POST形式传输$what&#x3D;flag给服务器<br>有两种方式，一种是利用hackbar，另一种是利用kali的curl:curl 网址 -d what&#x3D;flag<br>这里使用hackbar进行演示<br><img src="/CTF/4.PNG"><br>得到flag{fd62a96285bc8b777839587d95960ea9}<br>进入下一题<br><img src="/CTF/5.PNG"><br>当$num&#x3D;&#x3D;1时可以得到flag，但如果$num为数字或数字字符串时不执行如下代码，因此只有要同时满足这两点就可以了，类似于与$num&#x3D;1abc,它不属于numeric，同时也可以满足$num&#x3D;&#x3D;1<br><img src="/CTF/6.PNG"><br>得到flag{90809ce8ba8b4e37a27dbd52300b5234}<br>下一题<br><img src="/CTF/7.PNG"><br><img src="/CTF/8.PNG"><br><img src="/CTF/9.PNG"><br>这道题跟前面的思路相同就不解释了<br>cyberpeace{5f9b0f0ad513568198c86cb2f5eae9e2}<br>继续下一题<br><img src="/CTF/10.PNG"><br>这道题看起来还蛮高级的，让我们来解刨一下<br>if($a&#x3D;&#x3D;0 and $a){<br>    echo $flag1;<br>    }<br> 这里可以看出$a!&#x3D;&#x3D;&#x3D;0,也就是说$a还是类似于0+字母或符号的形式<br> 成功得到第一段flag<br> <img src="/CTF/11.PNG"><br> 继续解刨一下$b<br> if(is_numeric($b)){<br>    exit();<br>}<br>if($b&gt;1234){<br>    echo $flag2;<br>}<br>$b不为数字或数字字符串，同时还有要大于1234，这跟$a的思路是相同的，$b&#x3D;(一个大于1234的数字)+（一切非数字）<br>最终结果如下<br><img src="/CTF/12.PNG"><br>3&#x2F;6<br>今天继续做两个CTF的笔记<br>[极客大挑战 2019]BuyFlag<br>[ACTF2020 新生赛]BackupFile1<br><img src="/CTF/13.PNG"><br>BuyFlag，经过探索，发现了其提出的要求：需要是一位学生，需要回答正确的密码。先查看源代码，发现如下注释:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">    ~~~post money and password~~~</span><br><span class="line">if (isset($_POST[&#x27;password&#x27;])) &#123;</span><br><span class="line">    $password = $_POST[&#x27;password&#x27;];</span><br><span class="line">    if (is_numeric($password)) &#123;</span><br><span class="line">        echo &quot;password can&#x27;t be number&lt;/br&gt;&quot;;</span><br><span class="line">    &#125;elseif ($password == 404) &#123;</span><br><span class="line">        echo &quot;Password Right!&lt;/br&gt;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
-<p>password需要&#x3D;&#x3D;404,password不能是数字或数字字符串。<br>&#x3D;&#x3D;会自动转换，所以这里设定为404c<br>利用burpsuit抓包<br><img src="/CTF/14.PNG"><br>如图所示，其利用了GET传输，通过change request method修改为POST传输<br>cookie:user0修改为user1<br>(user是用户，0通常代表flase(错误),1通常代表true(正确)<br>将user修改为1使后台程序可以正常运行)<br><img src="/CTF/15.PNG"><br>这里可以看到他说想要买flag还需要1亿元<br>那我们也就给他money&#x3D;100000000(此时它会显示字符串超出限制，那我们换一种方式表示1e10,表示1+10个0)<br><img src="/CTF/16.PNG"><br>ok，成功拿下flag<br>接下来做BackupFile1<br><img src="/CTF/17.PNG"><br>也是非常干净只有一句话，让我们去寻找源文件，dirb或dirbsearch扫描，发现备份文件index.php.bak,发现如下<br><img src="/CTF/18.PNG"><br>key&#x3D;&#x3D;str key!&#x3D;数字或数字字符串时输出just name 所以设定key为123就可以了<br>得到flag<br><img src="/CTF/19.PNG"><br>（难点在于如何发现备份文件）<br>ok今天的ctf就先到这里啦，下次再见</p>
+<p>password需要&#x3D;&#x3D;404,password不能是数字或数字字符串。<br>&#x3D;&#x3D;会自动转换，所以这里设定为404c<br>利用burpsuit抓包<br><img src="/CTF/14.PNG"><br>如图所示，其利用了GET传输，通过change request method修改为POST传输<br>cookie:user0修改为user1<br>(user是用户，0通常代表flase(错误),1通常代表true(正确)<br>将user修改为1使后台程序可以正常运行)<br><img src="/CTF/15.PNG"><br>这里可以看到他说想要买flag还需要1亿元<br>那我们也就给他money&#x3D;100000000(此时它会显示字符串超出限制，那我们换一种方式表示1e10,表示1+10个0)<br><img src="/CTF/16.PNG"><br>ok，成功拿下flag<br>接下来做BackupFile1<br><img src="/CTF/17.PNG"><br>也是非常干净只有一句话，让我们去寻找源文件，dirb或dirbsearch扫描，发现备份文件index.php.bak,发现如下<br><img src="/CTF/18.PNG"><br>key&#x3D;&#x3D;str key!&#x3D;数字或数字字符串时输出just name 所以设定key为123就可以了<br>得到flag<br><img src="/CTF/19.PNG"><br>（难点在于如何发现备份文件）<br>ok今天的ctf就先到这里啦，下次再见<br>3&#x2F;11继续更新ctf进程<br>1.BugKu-Web-计算器</p>
+<p>2.攻防世界-Web新手区- disabled_button</p>
+<p>3.BugKu-Web-头等舱</p>
+<p>4.攻防世界-Web-baby_web</p>
+<p>5.极客大挑战-2019-Havefun</p>
+<p>6.BugKu-Web-程序员本地网站</p>
+<p>7.BugKu-Web-你从哪里来</p>
+<p>8.攻防世界-Web新手区-xff_referrer</p>
+<p>9.攻防世界-Web新手区-cookie</p>
+<p>我们一个一个来：<br><img src="/CTF/20.PNG"><br>这里可以看到需要我们输出计算结果来获取flag，但是设置了表格输出范围为1个字符<br>因此在这里我们通过F12进行范围修改<br><img src="/CTF/21.PNG"><br>这里有也是成功拿到flag<br>进入下一道<br><img src="/CTF/22.PNG"><br>这里可以看到一个按钮<br>大概就是说点击按钮获取flag，但是flag是灰色的，因此我们还是用上一道ctf题的思路，修改样源代码<br><img src="/CTF/23.PNG"><br>成功取得flag<br><img src="/CTF/24.PNG"><br>继续下一题<br><img src="/CTF/25.PNG"><br>查看相应头，发现flag<br><img src="/CTF/26.PNG"><br>下一道<br><img src="/CTF/27.PNG"><br>文件为1.php，尝试查看index.php（这里会强制转回1.php），但可以在网络中查看，发现flag<br><img src="/CTF/28.PNG"><br>下一道，这里就不具体写了F12发现注释</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$cat=$_GET[&#x27;cat&#x27;];</span><br><span class="line">        echo $cat;</span><br><span class="line">        if($cat==&#x27;dog&#x27;)&#123;</span><br><span class="line">            echo &#x27;Syc&#123;cat_cat_cat_cat&#125;&#x27;;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>输出变量?cat&#x3D;dog，即可拿到flag<br>ok，继续下一道<br>程序员本地网站<br><img src="/CTF/29.PNG"><br>利用burpsuite进行抓包，修改http header的信息X-Forword-for为127.0.0.1<br>取得flag<br><img src="/CTF/30.PNG"><br>进入下一题<br><img src="/CTF/31.PNG"><br>思路与上一题相似，但这里需要修改referer来欺骗服务器<br><img src="/CTF/32.PNG"><br>下一题<br>这道题也没什么可多说的，就是上面两道题的结合体<br><img src="/CTF/34.PNG"><br><img src="/CTF/35.PNG"><br>来到最后一题cookie<br><img src="/CTF/36.PNG"><br>直接从网络里看，他说在cookie.php中<br><img src="/CTF/37.PNG"><br>继续查看网络，发现flag<br><img src="/CTF/38.PNG"><br>ok，8道题目顺利完结，下次再见。</p>
 
     </div>
 
