@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本来是想跟html分类在一起的，但为了看得更清晰，这里还是决定再开有一个篇章  内联方式（行内样式）就是在HTML的标签中使用style属性来设置css样式格式： &lt;html标签 style&#x3D;”属性:值;属性:值;….”&gt;被修饰的内容&lt;&#x2F;html标签&gt; 在HTML中如何使用css样式  特点：仅作用于本标签。  style&#x3D;&quot;border: 1px so">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css">
+<meta property="og:url" content="http://example.com/2024/03/18/css/index.html">
+<meta property="og:site_name" content="沫篝的幻想世界">
+<meta property="og:description" content="本来是想跟html分类在一起的，但为了看得更清晰，这里还是决定再开有一个篇章  内联方式（行内样式）就是在HTML的标签中使用style属性来设置css样式格式： &lt;html标签 style&#x3D;”属性:值;属性:值;….”&gt;被修饰的内容&lt;&#x2F;html标签&gt; 在HTML中如何使用css样式  特点：仅作用于本标签。  style&#x3D;&quot;border: 1px so">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/CSS/2.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/3.PNG">
+<meta property="og:image" content="http://example.com/CSS/4.PNG">
+<meta property="og:image" content="http://example.com/CSS/5.PNG">
+<meta property="og:image" content="http://example.com/CSS/6.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="og:image" content="http://example.com/CSS/1.PNG">
+<meta property="article:published_time" content="2024-03-18T11:10:27.000Z">
+<meta property="article:modified_time" content="2024-03-18T14:13:53.473Z">
+<meta property="article:author" content="MoGo">
+<meta property="article:tag" content="网络信息安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/CSS/2.PNG">
+
+<link rel="canonical" href="http://example.com/2024/03/18/css/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>css | 沫篝的幻想世界</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">沫篝的幻想世界</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-友情链接">
+
+    <a href="/links/" rel="section"><i class="link fa-fw"></i>友情链接</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/03/18/css/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="MoGo">
+      <meta itemprop="description" content="Secret">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沫篝的幻想世界">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          css
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-03-18 19:10:27 / 修改时间：22:13:53" itemprop="dateCreated datePublished" datetime="2024-03-18T19:10:27+08:00">2024-03-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index"><span itemprop="name">css</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本来是想跟html分类在一起的，但为了看得更清晰，这里还是决定再开有一个篇章</p>
+<ol>
+<li><p>内联方式（行内样式）<br>就是在HTML的标签中使用style属性来设置css样式<br>格式： &lt;html标签 style&#x3D;”属性:值;属性:值;….”&gt;被修饰的内容&lt;&#x2F;html标签&gt;</p>
+<p style="color:blue;font-family:隶书">在HTML中如何使用css样式</p>
+ 特点：仅作用于本标签。
+ style="border: 1px solid red; padding: 20px"
+ </li>
+<li><p>内部方式（内嵌样式）<br> 就是在head标签中使用<style type="text/css">….</style>标签来设置css样式<br> 格式：<style type="text/css"><br>         ….css样式代码<br>         …{}<br>   </style><br><br> 特点：作用于当前整个页面</p>
+</li>
+</ol>
+<span id="more"></span>
+
+<ol start="3">
+<li>外部导入方式（外部链入）<br> 就是在head标签中使用<link/>标签导入一个css文件，在作用于本页面，实现css样式设置<br> 格式：<link href="文件名.css" type="text/css" rel="stylesheet"/></li>
+</ol>
+<p>特点：作用于整个网站</p>
+<p>他们的优先级：当样式冲突时，就是采用就近原则，是值css属性离被修饰的内容最近的为主。<br>    若没有样式冲突则采用叠加效果。</p>
+<p>下面我们做实验来验证一下:</p>
+<p>1.css内联</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span><br><span class="line">	&lt;title&gt;css内嵌样式&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1 style=&quot;border: 5px solid green;&quot;&gt;CSS内嵌&lt;/h1&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>示例图<br><img src="/CSS/2.PNG"><br>2.css内嵌</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span><br><span class="line">	&lt;title&gt;css内联样式&lt;/title&gt;</span><br><span class="line">	&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">		h1&#123;</span><br><span class="line">			border: 2px solid yellow;</span><br><span class="line">			padding: 20px;</span><br><span class="line">			#设置内边框大小</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;CSS内嵌&lt;/h1&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>示例图:<br><img src="/CSS/1.PNG"><br>3.css外链</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span><br><span class="line">	&lt;title&gt;css外链&lt;/title&gt;</span><br><span class="line">	&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;1.css&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p&gt;112121212&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">p&#123;</span><br><span class="line">	border: 12px solid yellow;</span><br><span class="line">	padding: 20px;</span><br><span class="line">#边框粗细和线条样式颜色</span><br><span class="line">#设置内边框大小</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>示例图:<br><img src="/CSS/3.PNG"><br>4.优先级测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span><br><span class="line">	&lt;title&gt;css外联&lt;/title&gt;</span><br><span class="line">	&lt;style&gt;</span><br><span class="line">			p&#123;</span><br><span class="line">			border: 2px solid green;</span><br><span class="line">			padding: 20px;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">	&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;1.css&quot;&gt;</span><br><span class="line">&lt;!-- 就近原则，这里是优先采用外链 --&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p&gt;正常输出&lt;/p&gt;</span><br><span class="line">&lt;p style=&quot;border: 2px solid blue;&quot;&gt;内联输出&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">！！这里的就近原则指的是离被修饰文本更近</span><br></pre></td></tr></table></figure>
+<p>示例图:<br><img src="/CSS/4.PNG"><br>ok，接下来就是7个css选择器<br>1.html选择符（标签选择器）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">p&#123;&#125;</span><br><span class="line">h1&#123;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br></pre></td></tr></table></figure>
+<p>2.class类选择符 (使用点.将自定义名（类名）来定义的选择符)<br>定义： .类名{样式….} </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">.md1&#123;&#125;	</span><br><span class="line">.md2&#123;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p class=&quot;md1&quot;&gt;121212&lt;/p&gt;</span><br><span class="line">&lt;h1 class=&quot;md2&quot;&gt;121212&lt;/h1&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p>3.id选择符<br>定义： #id名{样式…..}<br>注意：id选择符只在网页中使用一次.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">#md1&#123;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p id=&quot;md1&quot;&gt;121212&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p>选择符的优先级：从大到小 [ID选择符]-&gt;[class选择符]-&gt;[html选择符]-&gt;[html属性]<br>4.通配符选择器（通用选择器）<br>    选择器名称为* 的选择器<br>    语法：<br>    {property: value;property: value}<br>    功能，对所有html标签起作用。<br>    一般用于页面的初始化工作，统一字体，边框，内外边距<br>    {<br>        font-size:20px;<br>        color:#3366FF;<br>    }<br>5.关联选择符（包含选择符）<br>    格式： 选择符1 选择符2 选择符3 …{样式….}<br>    例如： table a{….} &#x2F;table标签里的a标签才采用此样式*&#x2F;<br>            h1 p{color:red} &#x2F;只有h1标签中的p标签才采用此样式*&#x2F;</p>
+<p>6.组合选择符（选择符组）<br>    格式： 选择符1,选择符2,选择符3 …{样式….}<br>            h3,h4,h5{color:green;} &#x2F;<em>h3、h4和h5都采用此样式</em>&#x2F;<br>7.伪类选(伪元素)择符：<br>    格式： 标签名:伪类名{样式….}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a:link &#123;color: #FF0000; text-decoration: none&#125; 	    /* 未访问的链接 */</span><br><span class="line">a:visited &#123;color: #00FF00; text-decoration: none&#125; 	    /* 已访问的链接 */</span><br><span class="line">a:hover &#123;color: #FF00FF; text-decoration: underline&#125; /* 鼠标在链接上 */</span><br><span class="line">a:active &#123;color: #0000FF; text-decoration: underline&#125; /* 激活链接 */</span><br></pre></td></tr></table></figure>
+<p>这些了解一下就可以了<br>接下来让我们了解一下css的常用属性<br>1.color颜色属性<br>RGB颜色: 红(R)、绿(G)、蓝(B)三个颜色通道的变化<br>    background-color: #CCCCCC;<br>RGBA颜色: 红(R)、绿(G)、蓝(B)、透明度(A)<br>    background-color: rgba(0,0,0,0.5);<br>2.字体属性 (font)<br>font-size: 20px (字体大小)<br>font-family: Arial (选择字体)<br>font-style: （normal默认字体 ，italic斜体 , oblique倾斜的字体）<br>font-weight: bold (粗体)<br>3.文本属性<br>text-indent: 30px （首行缩进）<br>text-overflow: (溢出时输出…)<br>white-space:nowrap (强制在同一行输出文本)<br>text-align: 	文本的位置：left center right<br>text-decoration: 字体画线：none无、underline下画线，line-through贯穿线<br>text-shadow: 文本的文字是否有阴影及模糊效果<br>text-shadow:1px 1px rgba(0,0,0,0.3);<br>letter-spacing: 文字或字母的间距<br>line-height：行高<br>color:颜色<br>4.边框<br>border:宽度 样式 颜色;<br>border-color;<br>border-style; 边框样式：solid实线，dotted点状线，dashed虚线<br>border-width:<br>border-left-color;<br>border-left-style;<br>border-left-width:<br>CSS3的样式<br>border-radius：圆角处理<br>box-shadow:	设置或检索对象阴影<br>5.背景属性：background<br>background-color: 背景颜色<br>background-image: 背景图片<br>background-repeat：是否重复，如何重复?(平铺)<br>background-position：背景定位<br>6. 内补白（内补丁）<br>    padding：		检索或设置对象四边的内部边距,如padding:10px; padding:5px 10px;<br>    padding-top：	检索或设置对象顶边的内部边距<br>    padding-right：	检索或设置对象右边的内部边距<br>    padding-bottom：检索或设置对象下边的内部边距<br>    padding-left：	检索或设置对象左边的内部边距</p>
+<ol start="7">
+<li><p>外补白（外补丁）<br> margin：		检索或设置对象四边的外延边距,如 margin:10px;  margin:5px auto;<br> margin-top：	检索或设置对象顶边的外延边距<br> margin-right：	检索或设置对象右边的外延边距<br> margin-bottom： 检索或设置对象下边的外延边距<br> margin-left：	检索或设置对象左边的外延边距	</p>
+</li>
+<li><p>Position定位<br> position:	定位方式：absolute(绝对定位)、fixed(固定)（relative定位参考，可对内部相对absolute定位）<br> z-index:	层叠顺序，值越大越在上方。<br> top:		检索或设置对象与其最近一个定位的父对象顶部相关的位置<br> right:		检索或设置对象与其最近一个定位的父对象右边相关的位置<br> bottom:		检索或设置对象与其最近一个定位的父对象下边相关的位置<br> left:		检索或设置对象与其最近一个定位的父对象左边相关的位置<br>让我们来做个小练习<br><img src="/CSS/5.PNG"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">	&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</span><br><span class="line">	&lt;title&gt;DIV box&lt;/title&gt;</span><br><span class="line">	&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">		.div1&#123;</span><br><span class="line">			width: 200px;</span><br><span class="line">			height: 500px;</span><br><span class="line">			background-color: blue;</span><br><span class="line">			float: left;		</span><br><span class="line">		&#125;</span><br><span class="line">		.div2&#123;</span><br><span class="line">			width: 500px;</span><br><span class="line">			height: 200px;</span><br><span class="line">			background-color: pink;</span><br><span class="line">			/*background-color: yellow;</span><br><span class="line">			border: 10px solid pink;</span><br><span class="line">			margin-top: 100px;</span><br><span class="line">			margin-left: 200px;*/</span><br><span class="line">			float: left;</span><br><span class="line">		&#125;</span><br><span class="line">		.div3&#123;</span><br><span class="line">			background-color: yellow;</span><br><span class="line">			width: 500px;</span><br><span class="line">			height: 300px;</span><br><span class="line">			float: left;</span><br><span class="line">		&#125;</span><br><span class="line">		.div4&#123;</span><br><span class="line">			width: 700px;</span><br><span class="line">			height: 500px;</span><br><span class="line">		&#125;</span><br><span class="line">	&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div class=&quot;div4&quot;&gt;</span><br><span class="line">		&lt;div class=&quot;div1&quot;&gt;&lt;/div&gt;</span><br><span class="line">		&lt;div class=&quot;div2&quot;&gt;&lt;/div&gt;</span><br><span class="line">		&lt;div class=&quot;div3&quot;&gt;&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>示例图:<br><img src="/CSS/6.PNG"><br>接下来来做一些理论练习</p>
+</li>
+<li><p>CSS指的是什么？	A<br>A. 层叠样式表<br>B. 网页编程语言<br>C. 网页制作软件<br>D. 图像处理软件</p>
+</li>
+<li><p>CSS的主要作用是什么？ D<br>A. 美化网页<br>B. 制作动画<br>C. 编写代码<br>D. 设计网站结构</p>
+</li>
+<li><p>如何使用CSS选择器选择页面上的所有段落？ A<br>A. p { }<br>B. #p { }</p>
+</li>
+</ol>
+<p>C. .p { }<br>D. * { }</p>
+<ol start="4">
+<li><p>下列哪个CSS属性用于设置文本颜色？ A<br>A. color<br>B. font<br>C. text<br>D. size</p>
+</li>
+<li><p>下列哪个CSS属性用于设置背景图片？ A<br>A. background-image<br>B. background-color<br>C. background-position<br>D. background-size</p>
+</li>
+<li><p>CSS中的“z-index”属性用于控制什么？ B<br>A. 元素的透明度<br>B. 元素的堆叠顺序<br>C. 元素的宽高<br>D. 元素的背景色</p>
+</li>
+<li><p>下列哪个CSS选择器用于选择具有特定类的元素？ B<br>A. id选择器<br>B. 类选择器<br>C. 标签选择器<br>D. 属性选择器</p>
+</li>
+<li><p>CSS中的“box-shadow”属性用于实现什么效果？ C<br>A. 文本阴影<br>B. 图片阴影<br>C. 元素阴影<br>D. 边框阴影</p>
+</li>
+<li><p>如何使用CSS将元素的显示方式设置为块级元素？ B<br>A. display: inline;<br>B. display: block;<br>C. display: none;<br>D. display: flex;</p>
+</li>
+<li><p>下列哪个CSS属性用于设置元素的内边距？ A<br>A. padding<br>B. margin<br>C. border<br>D. width</p>
+</li>
+</ol>
+<p><strong>二、填空题（每题3分，共15分）</strong></p>
+<ol start="11">
+<li><p>CSS选择器分为标签选择器、类选择器、id选择器和伪类选择器四种。</p>
+</li>
+<li><p>CSS中用于设置字体大小的属性是font-size。</p>
+</li>
+<li><p>要使一个元素在页面中居中显示，可以使用CSS的text-align属性和margin属性。</p>
+</li>
+<li><p>CSS中，background-color属性用于设置元素的背景颜色。</p>
+</li>
+<li><p>CSS的margin属性用于设置元素之间的外边距。</p>
+</li>
+</ol>
+<p><strong>三、简答题（每题10分，共30分）</strong></p>
+<ol start="16">
+<li><p>简述CSS的层叠规则。<br>CSS层叠规则是指多个样式运用于同一个元素，浏览器最终的展示，元素的优先级如下:<br>内联&gt;id选择符&gt;，class（类选择器）,伪类选择符&gt;html选择符（标签显示器）同优先级按最后的执行</p>
+</li>
+<li><p>解释CSS中“盒模型”的概念，并列举其组成部分。<br>CSS盒模型包括内容，外边距（margin），内边距（padding），边框(border),内容为主体，展示文本内容，图片等，内边距指内容与边框的距离，边框将包裹着内边距和内容，外边距指的是盒子与其他元素的距离。</p>
+</li>
+<li><p>描述如何使用CSS创建一个简单的导航栏。<br>用&lt; ul&gt;定义结构，&lt; li&gt;设置列表项，可以通过float或display:inline-block属性来使内容水平排列。</p>
+</li>
+</ol>
+<p><strong>四、应用题（每题15分，共30分）</strong></p>
+<ol start="19">
+<li>编写CSS代码，实现以下要求：</li>
+</ol>
+<ul>
+<li><p>页面背景色为浅灰色（#f0f0f0）</p>
+</li>
+<li><p>段落文字颜色为深蓝色（#000080），字体大小为16px，行高为1.5</p>
+</li>
+<li><p>所有链接在未被点击时显示为红色（#ff0000），点击后变为绿色（#00ff00）</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> body&#123;</span><br><span class="line">  	blackboard-color: #f0f0f0;</span><br><span class="line">  &#125;</span><br><span class="line">  p&#123;</span><br><span class="line">  	font-color: #000080;</span><br><span class="line">  	font-size: 16px;</span><br><span class="line">  	line-height: 1.5;</span><br><span class="line">  &#125;</span><br><span class="line">a &#123;</span><br><span class="line">	font-color: #ff0000;</span><br><span class="line">&#125;</span><br><span class="line">a hover&#123;</span><br><span class="line">	font-color: #00ff00;</span><br><span class="line">&#125;</span><br><span class="line">a:link /* 未访问的链接 */</span><br><span class="line">a:visited  /* 已访问的链接 */</span><br><span class="line">a:hover/* 鼠标在链接上 */</span><br><span class="line">a:active/* 激活链接 */</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="20">
+<li>编写CSS代码，实现以下要求：</li>
+</ol>
+<ul>
+<li><p>创建一个宽度为300px、高度为200px的div元素，背景色为黄色（#ffff00）</p>
+</li>
+<li><p>在div元素内部放置一个宽度为50%、高度为50px的矩形，背景色为蓝色（#0000ff），并居中显示</p>
+</li>
+<li><p>为div元素添加边框，宽度为2px，颜色为黑色（#000000）</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">.div&#123;</span><br><span class="line">	widen: 300px;</span><br><span class="line">	height: 200px;</span><br><span class="line">	background-color: #ffff00;</span><br><span class="line">	border: 2px solid #000000;</span><br><span class="line">	display: flex;</span><br><span class="line">	justify-content: center;</span><br><span class="line">	align-items: center;</span><br><span class="line">&#125;</span><br><span class="line">.div .box&#123;</span><br><span class="line">	width: 50%;</span><br><span class="line">	height: 50px;</span><br><span class="line">	background-color: #0000ff;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>五、综合题（每题5分，共5分）</strong></p>
+<p>描述CSS在网页设计中的重要性，并举例说明其在实际项目中的应用。</p>
+<p>CSS在网页设计中扮演着至关重要的角色。它允许开发者以{独立于HTML的方式控制网页的外观和布局，从而实现更加美观、易于维护和响应式的网站}通过使用CSS，开发者可以统一设置页面的字体、颜色、间距等样式，提高网页的可读性和用户体验。此外，{CSS还支持动画、过渡和变换等效果，为网页增添动态和交互性}。</p>
+<p>在实际项目中，CSS的应用广泛而深入。例如，在构建企业官网时，可以使用CSS来{定义网站的整体风格，包括配色方案、字体选择和布局方式}，以确保网站的一致性和品牌识别度。在电商网站中，CSS可以用来设计商品展示页面的样式，如商品图片的排列、价格标签的样式以及购买按钮的样式等，以提升用户的购物体验。此外，CSS还可以用于响应式设计，{使网站能够在不同设备和屏幕尺寸上良好地显示和运行}。</p>
+<p>还有一份改日再整理</p>
+<p><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"><br><img src="/CSS/1.PNG"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" rel="tag"># 网络信息安全</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/04/CTF/" rel="prev" title="CTF">
+      <i class="fa fa-chevron-left"></i> CTF
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="MoGo"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">MoGo</p>
+  <div class="site-description" itemprop="description">Secret</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        <!--
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">
+  
+  &copy; 2023-10 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MoGo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+ 本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+-->
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+<script type="text/javascript" src="/js/love.js"></script>
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
