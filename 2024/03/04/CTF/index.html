@@ -69,8 +69,27 @@
 <meta property="og:image" content="http://example.com/CTF/41.PNG">
 <meta property="og:image" content="http://example.com/CTF/42.PNG">
 <meta property="og:image" content="http://example.com/CTF/43.PNG">
+<meta property="og:image" content="http://example.com/CTF/44.PNG">
+<meta property="og:image" content="http://example.com/CTF/45.PNG">
+<meta property="og:image" content="http://example.com/CTF/46.PNG">
+<meta property="og:image" content="http://example.com/CTF/47.PNG">
+<meta property="og:image" content="http://example.com/CTF/48.PNG">
+<meta property="og:image" content="http://example.com/CTF/49.PNG">
+<meta property="og:image" content="http://example.com/CTF/50.PNG">
+<meta property="og:image" content="http://example.com/CTF/51.PNG">
+<meta property="og:image" content="http://example.com/CTF/52.PNG">
+<meta property="og:image" content="http://example.com/CTF/53.PNG">
+<meta property="og:image" content="http://example.com/CTF/54.PNG">
+<meta property="og:image" content="http://example.com/CTF/55.PNG">
+<meta property="og:image" content="http://example.com/CTF/56.PNG">
+<meta property="og:image" content="http://example.com/CTF/57.PNG">
+<meta property="og:image" content="http://example.com/CTF/58.PNG">
+<meta property="og:image" content="http://example.com/CTF/59.PNG">
+<meta property="og:image" content="http://example.com/CTF/60.PNG">
+<meta property="og:image" content="http://example.com/CTF/61.PNG">
+<meta property="og:image" content="http://example.com/CTF/62.PNG">
 <meta property="article:published_time" content="2024-03-04T14:44:01.000Z">
-<meta property="article:modified_time" content="2024-03-31T11:13:14.927Z">
+<meta property="article:modified_time" content="2024-04-14T07:53:52.761Z">
 <meta property="article:author" content="MoGo">
 <meta property="article:tag" content="网络信息安全">
 <meta name="twitter:card" content="summary">
@@ -259,7 +278,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-31 19:13:14" itemprop="dateModified" datetime="2024-03-31T19:13:14+08:00">2024-03-31</time>
+                <time title="修改时间：2024-04-14 15:53:52" itemprop="dateModified" datetime="2024-04-14T15:53:52+08:00">2024-04-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -305,6 +324,14 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$cat=$_GET[&#x27;cat&#x27;];</span><br><span class="line">        echo $cat;</span><br><span class="line">        if($cat==&#x27;dog&#x27;)&#123;</span><br><span class="line">            echo &#x27;Syc&#123;cat_cat_cat_cat&#125;&#x27;;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 <p>输出变量?cat&#x3D;dog，即可拿到flag<br>ok，继续下一道<br>程序员本地网站<br><img src="/CTF/29.PNG"><br>利用burpsuite进行抓包，修改http header的信息X-Forword-for为127.0.0.1<br>取得flag<br><img src="/CTF/30.PNG"><br>进入下一题<br><img src="/CTF/31.PNG"><br>思路与上一题相似，但这里需要修改referer来欺骗服务器<br><img src="/CTF/32.PNG"><br>下一题<br>这道题也没什么可多说的，就是上面两道题的结合体<br><img src="/CTF/34.PNG"><br><img src="/CTF/35.PNG"><br>来到最后一题cookie<br><img src="/CTF/36.PNG"><br>直接从网络里看，他说在cookie.php中<br><img src="/CTF/37.PNG"><br>继续查看网络，发现flag<br><img src="/CTF/38.PNG"><br>ok，8道题目顺利完结，下次再见。</p>
 <p>3&#x2F;31<br>最近身体疲乏，笔记更新的也有点晚<br>今天做一个bugku的前女友<br><img src="/CTF/39.PNG"><br>F12发现隐藏文件code.txt<br><img src="/CTF/40.PNG"><br><img src="/CTF/41.PNG"><br>if($v1 !&#x3D; $v2 &amp;&amp; md5($v1) &#x3D;&#x3D; md5($v2))<br>v1不等于v2同时md5$v1需要等于md5$v2<br>这个简单，数组绕过或者利用md5值相等的不同函数<br>s878926199a与s155964671a<br>!strcmp($v3, $flag)<br>将v3与flag作比较，然后取非<br>取非，即把0变成1，非0变成0;<br>当v3 &gt; flag时为1，取非成为0，代码不执行<br>当v3 &lt; flag时为-1，取非成为0，还是不执行<br>所以只有当flag&#x3D;v3时，取非才是1，代码执行<br>因此这里v3我们只能利用数组绕过<br>方法一:<br>?v1&#x3D;QNKCDZO&amp;v2&#x3D;240610708&amp;v3[]&#x3D;1<br><img src="/CTF/42.PNG"><br>方法二:<br>?v1[]&#x3D;1221&amp;v2[]&#x3D;211&amp;v3[]&#x3D;2313<br><img src="/CTF/43.PNG"><br>ok,暂时就到这，下次见</p>
+<p>4&#x2F;14 今天在来做几个ctf题目<br>首先我们要了解PHP中带有代码执行漏洞的函数<br>下面列举两个常用的函数<br>eval（）</p>
+<p>assert（）</p>
+<p>ok，开始第一道<br>CTFhub-RCE -eval执行<br><img src="/CTF/44.PNG"><br>由图可知，我们需要将命令赋给cmd进行运行<br>我们先查看一下当前文件夹<br><code>?cmd=system(&quot;ls&quot;);</code><br><img src="/CTF/45.PNG"><br>试着不断倒退文件夹<br><code>../../../</code><br>发现flag文件<br><img src="/CTF/46.PNG"><br><code>?cmd=system(&quot;cat ../../../flag_31398&quot;);</code>得到flag<br><img src="/CTF/47.PNG"><br>ctfhub{496c51c522ec53cd9cdc7ef2}</p>
+<p>CTFhub-RCE -文件包含<br><img src="/CTF/48.PNG"><br>strpos(string,find,start)<br>意思在string字符串中找find的位置,start是查找的开始位置<br><code>(!strpos($_GET[&quot;file&quot;], &quot;flag&quot;))</code><br>如果file中没有flag字符串就执行下面的include $_GET[“file”]<br><code>?file=shell.txt</code><br><img src="/CTF/49.PNG"><br>查看当前目录，进行..&#x2F;退位 发现flag<br><code>ctfhub=system(&quot;ls ../../../&quot;);</code><br><img src="/CTF/50.PNG"><br>得到flag<br><code>ctfhub=system(&quot;cat ../../../flag&quot;);</code><br><img src="/CTF/51.PNG"></p>
+<p>buuctf-webshell后门<br>下载的到文件<br>通过火绒发现病毒所在文件<br><img src="/CTF/52.PNG"><br>发现木马位置<br><img src="/CTF/53.PNG"><br>flag{ba8e6c6f35a53933b871480bb9a9545c}</p>
+<p>buuctf-后门查杀<br>下载文件，利用火绒发现木马文件<br><img src="/CTF/54.PNG"><br>发现木马位置<br><img src="/CTF/55.PNG"><br>得到flag{6ac45fb83b3bc355c024f5034b947dd3}</p>
+<p>bugku-web-eval<br><img src="/CTF/56.PNG"><br>这里需要传入hello参数<br><code>?hello=system(&quot;ls&quot;)</code><br>发现flag.php<br><img src="/CTF/57.PNG"><br><code>cat flag.php</code><br>发现直接运行了php程序，因此我们这里利用tac只读不运行进行查看<br><img src="/CTF/58.PNG"><br><img src="/CTF/59.PNG"></p>
+<p>bugku-web-shell<br><img src="/CTF/60.PNG"><br><code>?s=system(&quot;ls&quot;)</code><br><img src="/CTF/61.PNG"><br><img src="/CTF/62.PNG"><br>谈笑间又被骗了4金币<br>今天的ctf就到这里了，我们下期再见</p>
 
     </div>
 
