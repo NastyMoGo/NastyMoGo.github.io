@@ -119,8 +119,19 @@
 <meta property="og:image" content="http://example.com/CTF/91.PNG">
 <meta property="og:image" content="http://example.com/CTF/92.PNG">
 <meta property="og:image" content="http://example.com/CTF/93.PNG">
+<meta property="og:image" content="http://example.com/CTF/94.PNG">
+<meta property="og:image" content="http://example.com/CTF/95.PNG">
+<meta property="og:image" content="http://example.com/CTF/96.PNG">
+<meta property="og:image" content="http://example.com/CTF/97.PNG">
+<meta property="og:image" content="http://example.com/CTF/98.PNG">
+<meta property="og:image" content="http://example.com/CTF/99.PNG">
+<meta property="og:image" content="http://example.com/CTF/100.PNG">
+<meta property="og:image" content="http://example.com/CTF/1001.PNG">
+<meta property="og:image" content="http://example.com/CTF/102.PNG">
+<meta property="og:image" content="http://example.com/CTF/103.PNG">
+<meta property="og:image" content="http://example.com/CTF/104.PNG">
 <meta property="article:published_time" content="2024-03-04T14:44:01.000Z">
-<meta property="article:modified_time" content="2024-04-22T15:19:43.185Z">
+<meta property="article:modified_time" content="2024-08-06T04:24:53.074Z">
 <meta property="article:author" content="MoGo">
 <meta property="article:tag" content="网络信息安全">
 <meta name="twitter:card" content="summary">
@@ -309,7 +320,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-22 23:19:43" itemprop="dateModified" datetime="2024-04-22T23:19:43+08:00">2024-04-22</time>
+                <time title="修改时间：2024-08-06 12:24:53" itemprop="dateModified" datetime="2024-08-06T12:24:53+08:00">2024-08-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -378,6 +389,15 @@
 
 <p>3.BUUCTF-[ACTF2020 新生赛]Include<br><img src="/CTF/86.PNG"><br>这里让我们找flag，又是熟悉的感觉，再次尝试伪协议，转换为base64<br><img src="/CTF/87.PNG"><br>也是成功拿下（知识点有点重复了）<br><img src="/CTF/88.PNG"></p>
 <p>4.BUUCTF-[极客大挑战 2019]Secret File<br><img src="/CTF/89.PNG"><br>真是紧张又刺激的页面呢<br>通过查看源代码发现隐藏超链接，后又发现一个超链接，但都一无所获，因此这里决定抓包查看<br><img src="/CTF/90.PNG"><br>经过一番查看发现注释文件secr3t.php<br><img src="/CTF/91.PNG"><br>打开进行查看<br>得知flag在flag.php中，file可进行文件包含漏洞，但这里无法直接查看，还是需要利用到伪协议<br>其中禁止使用..&#x2F;,tp,input,data<br><img src="/CTF/92.PNG"><br>解码拿到flag<br><img src="/CTF/93.PNG"><br>完结，睡大觉</p>
+<p>8&#x2F;6<br>今天来对前些日子完成的ctf题目进行一个整理<br>1.HTTP</p>
+<p>2.Head?Header</p>
+<p>3.我真的会谢</p>
+<p>4.word-for-you</p>
+<p>5.word-for-you2</p>
+<p>————————————————————————————————————————————————————————————————————<br>HTTP<br>进入靶机<br><img src="/CTF/94.PNG"><br>老样子先F12寻找线索<br><img src="/CTF/95.PNG"><br>发现隐藏目录secret.php<br>查看后发现需要从<a target="_blank" rel="noopener" href="https://sycsecret.buuoj.cn/">https://Sycsecret.buuoj.cn</a> 访问<br>利用Burp进行拦截，修改referer<br><img src="/CTF/96.PNG"><br>后又需要Syclover,利用User-agent<br><img src="/CTF/97.PNG"><br>后又要求只能本地进行查看，将X-Forwarded-For修改为本地进行传输<br><img src="/CTF/98.PNG"><br>成功拿到flag{7d9ddd19-b7c1-4d17-89a5-3852bd468c36}</p>
+<hr>
+<p><img src="/CTF/99.PNG"><br><img src="/CTF/100.PNG"></p>
+<p><img src="/CTF/1001.PNG"><br><img src="/CTF/102.PNG"><br><img src="/CTF/103.PNG"><br><img src="/CTF/104.PNG"></p>
 
     </div>
 
