@@ -126,12 +126,12 @@
 <meta property="og:image" content="http://example.com/CTF/98.PNG">
 <meta property="og:image" content="http://example.com/CTF/99.PNG">
 <meta property="og:image" content="http://example.com/CTF/100.PNG">
-<meta property="og:image" content="http://example.com/CTF/1001.PNG">
+<meta property="og:image" content="http://example.com/CTF/101.PNG">
 <meta property="og:image" content="http://example.com/CTF/102.PNG">
 <meta property="og:image" content="http://example.com/CTF/103.PNG">
 <meta property="og:image" content="http://example.com/CTF/104.PNG">
 <meta property="article:published_time" content="2024-03-04T14:44:01.000Z">
-<meta property="article:modified_time" content="2024-08-06T04:24:53.074Z">
+<meta property="article:modified_time" content="2024-08-07T05:25:52.541Z">
 <meta property="article:author" content="MoGo">
 <meta property="article:tag" content="网络信息安全">
 <meta name="twitter:card" content="summary">
@@ -320,7 +320,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-06 12:24:53" itemprop="dateModified" datetime="2024-08-06T12:24:53+08:00">2024-08-06</time>
+                <time title="修改时间：2024-08-07 13:25:52" itemprop="dateModified" datetime="2024-08-07T13:25:52+08:00">2024-08-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -396,8 +396,13 @@
 <p>5.word-for-you2</p>
 <p>————————————————————————————————————————————————————————————————————<br>HTTP<br>进入靶机<br><img src="/CTF/94.PNG"><br>老样子先F12寻找线索<br><img src="/CTF/95.PNG"><br>发现隐藏目录secret.php<br>查看后发现需要从<a target="_blank" rel="noopener" href="https://sycsecret.buuoj.cn/">https://Sycsecret.buuoj.cn</a> 访问<br>利用Burp进行拦截，修改referer<br><img src="/CTF/96.PNG"><br>后又需要Syclover,利用User-agent<br><img src="/CTF/97.PNG"><br>后又要求只能本地进行查看，将X-Forwarded-For修改为本地进行传输<br><img src="/CTF/98.PNG"><br>成功拿到flag{7d9ddd19-b7c1-4d17-89a5-3852bd468c36}</p>
 <hr>
-<p><img src="/CTF/99.PNG"><br><img src="/CTF/100.PNG"></p>
-<p><img src="/CTF/1001.PNG"><br><img src="/CTF/102.PNG"><br><img src="/CTF/103.PNG"><br><img src="/CTF/104.PNG"></p>
+<p>Head?Header<br><img src="/CTF/99.PNG"><br>跟上道题思路一样，这里就不演示了</p>
+<hr>
+<p>我真的会谢<br>如图可知，作者将flag藏在了三个地方<br><img src="/CTF/100.PNG"><br>我们先查看robots.txt,顺利发现第一个flag,Part One: flag{Th1s_Is_s00<br>(此文件一般为留给渗透人员的渗透要求)<br>接下来尝试下载备份文件<br><img src="/CTF/101.PNG"><br>尝试<a target="_blank" rel="noopener" href="http://www.zip/">www.zip</a>, 解压以后发现flag，Part Three: u_th1nk_so?}</p>
+<p>接下来尝试从源码中找寻线索<br>发现注释<!--I used VIM to write this file, but some errors occurred midway.--><br>VIM非正常退出很可能生成swp文件，尝试查看.index.php.swp<br><img src="/CTF/102.PNG"><br>成功得到最后一段flag</p>
+<p>————————————————————————————————————————————————————————————————————<br>Word-For-You 1&#x2F;2<br>这里一与二差距不大，这里只展示2的渗透过程<br><img src="/CTF/103.PNG"><br>利用sqlmap中 修改User-Agent，通过参数–random-agent进行渗透，从而入侵数据库，从而得到flag<br>火速完结</p>
+<hr>
+<p><img src="/CTF/104.PNG"></p>
 
     </div>
 
